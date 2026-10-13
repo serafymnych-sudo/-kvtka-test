@@ -1,0 +1,2789 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KVTKA — квіткова студія, Київ</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%2322202A%22/%3E%3Ctext x=%2232%22 y=%2244%22 font-size=%2234%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Georgia%22%3EK%3C/text%3E%3C/svg%3E">
+    <meta name="description" content="Авторські букети, композиції в коробках і кошиках з доставкою по Києву.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ink: '#22202A',
+                        muted: '#6E6878',
+                        paper: '#F7F5F8',
+                        line: '#E8E3EC',
+                        accent: '#9E2F57',
+                        blush: '#F4E7EC',
+                        sage: '#E1E8DD',
+                        mist: '#ECE8F3'
+                    },
+                    fontFamily: {
+                        display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+                        sans: ['Onest', 'system-ui', 'sans-serif']
+                    },
+                    boxShadow: {
+                        soft: '0 14px 34px -16px rgba(34,32,42,.28)'
+                    }
+                }
+            }
+        };
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Onest', system-ui, sans-serif; }
+        :focus-visible { outline: 2px solid #9E2F57; outline-offset: 2px; }
+        input[type=date]::-webkit-calendar-picker-indicator { cursor: pointer; }
+        .bump { animation: bump .35s ease; }
+        @keyframes bump { 0%{transform:scale(1)} 50%{transform:scale(1.25)} 100%{transform:scale(1)} }
+        .toast-show { opacity: 1 !important; transform: translate(-50%, 0) !important; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-thumb { background: #cfc7d6; border-radius: 6px; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { scrollbar-width: none; }
+        .fade-right { -webkit-mask-image: linear-gradient(to right, #000 85%, transparent); mask-image: linear-gradient(to right, #000 85%, transparent); }
+        @media (min-width: 768px) { .fade-right { -webkit-mask-image: none; mask-image: none; } }
+
+        /* Поля — світла вітрина */
+        .fld { width: 100%; padding: .72rem 1rem; background: #fff; border: 1px solid #E3DEE7; border-radius: .9rem; font-size: .9rem; color: #22202A; transition: border-color .15s, box-shadow .15s; }
+        .fld::placeholder { color: #9a93a3; }
+        .fld:focus { outline: none; border-color: #9E2F57; box-shadow: 0 0 0 3px rgba(158,47,87,.12); }
+        .fld:disabled { opacity: .45; cursor: not-allowed; }
+
+        /* Адмінка — темна робоча зона */
+        .adm .fld { background: rgba(39,39,42,.6); border: 1px solid #3f3f46; color: #fff; box-shadow: none; }
+        .adm .fld::placeholder { color: #71717a; }
+        .adm .fld:focus { border-color: #f43f5e; }
+        .lbl { display: block; font-size: .72rem; font-weight: 700; color: #a1a1aa; margin-bottom: .45rem; }
+        .ed-section { background: rgba(39,39,42,.3); border: 1px solid #27272a; border-radius: 1.25rem; padding: 1.25rem; }
+        .ed-h { display: flex; align-items: center; gap: .5rem; font-weight: 800; color: #fff; font-size: .95rem; margin-bottom: 1rem; }
+        .ed-num { width: 1.5rem; height: 1.5rem; border-radius: 999px; background: rgba(244,63,94,.15); color: #fb7185; font-size: .7rem; display: inline-flex; align-items: center; justify-content: center; }
+        .icon-btn { width: 2rem; height: 2rem; display: inline-flex; align-items: center; justify-content: center; border-radius: .75rem; transition: background .15s, color .15s; }
+        .switch { position: relative; width: 2.6rem; height: 1.45rem; flex-shrink: 0; display: inline-block; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .switch span { position: absolute; inset: 0; background: #3f3f46; border-radius: 999px; transition: .2s; cursor: pointer; }
+        .switch span::before { content: ''; position: absolute; width: 1.05rem; height: 1.05rem; left: .2rem; top: .2rem; background: #fff; border-radius: 999px; transition: .2s; }
+        .switch input:checked + span { background: #f43f5e; }
+        .switch input:checked + span::before { transform: translateX(1.15rem); }
+
+        .card { transition: box-shadow .2s ease, transform .2s ease; }
+        .card:hover { box-shadow: 0 14px 34px -16px rgba(34,32,42,.28); transform: translateY(-2px); }
+        .card img.main { transition: transform .5s ease; }
+        .card:hover img.main { transform: scale(1.03); }
+        @media (prefers-reduced-motion: reduce) { * { transition-duration: 0s !important; animation: none !important; } }
+    </style>
+</head>
+<body class="bg-paper text-ink min-h-screen flex flex-col antialiased">
+
+    <!-- Announcement bar -->
+    <div class="bg-ink text-white/85 text-xs">
+        <div id="announce" class="max-w-7xl mx-auto px-4 sm:px-6 h-9 flex items-center justify-center gap-8 overflow-hidden whitespace-nowrap"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-white/95 backdrop-blur border-b border-line sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 md:h-[72px] flex items-center gap-3 md:gap-8">
+            <button onclick="openMobileMenu()" class="md:hidden w-10 h-10 -ml-2 rounded-xl flex items-center justify-center hover:bg-paper" aria-label="Меню"><i data-lucide="menu" class="w-5 h-5"></i></button>
+
+            <a href="#" onclick="event.preventDefault(); setFilter('all', null, false); window.scrollTo({top:0, behavior:'smooth'})" class="shrink-0 leading-none">
+                <span class="font-display font-bold text-[1.7rem] tracking-[0.12em]">KVTKA</span>
+                <span class="hidden sm:block text-[11px] text-muted mt-0.5">квіткова студія в Києві</span>
+            </a>
+
+            <div class="hidden md:flex flex-1 max-w-md relative">
+                <i data-lucide="search" class="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-muted"></i>
+                <input id="search-input" type="search" placeholder="Пошук: півонії, кошик, коробка…" oninput="onSearch(this.value)" onkeydown="if(event.key==='Enter') scrollToCatalog()" class="fld !rounded-full !bg-paper !border-transparent" style="padding-left:2.6rem">
+            </div>
+
+            <div class="flex items-center gap-1 sm:gap-2 ml-auto">
+                <button id="admin-header-btn" onclick="openAdminModal()" class="hidden h-10 px-3 rounded-full hover:bg-paper items-center gap-2 text-xs font-semibold text-muted transition" aria-label="Адмінка">
+                    <i data-lucide="user-round" class="w-4 h-4"></i>
+                    <span id="admin-btn-text" class="hidden sm:inline">Адмінка</span>
+                </button>
+                <button onclick="toggleCart()" class="relative h-10 pl-4 pr-3 rounded-full bg-ink text-white hover:bg-accent flex items-center gap-2 text-xs font-semibold transition" aria-label="Кошик">
+                    <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                    <span class="hidden sm:inline">Кошик</span>
+                    <span id="cart-count" class="bg-white text-ink text-[10px] font-bold rounded-full min-w-[20px] h-5 px-1 flex items-center justify-center">0</span>
+                </button>
+            </div>
+        </div>
+
+        <nav id="desktop-nav" class="hidden md:block border-t border-line">
+            <div class="max-w-7xl mx-auto px-6 h-12 flex items-center gap-1" id="dd-row"></div>
+        </nav>
+    </header>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" onclick="if(event.target===this) closeMobileMenu()" class="fixed inset-0 bg-ink/40 z-50 hidden">
+        <div class="bg-white w-[86%] max-w-sm h-full flex flex-col">
+            <div class="flex items-center justify-between px-5 h-16 border-b border-line">
+                <span class="font-display font-bold text-2xl tracking-[0.12em]">KVTKA</span>
+                <button onclick="closeMobileMenu()" class="w-9 h-9 rounded-full hover:bg-paper flex items-center justify-center" aria-label="Закрити"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <div class="p-4 border-b border-line relative">
+                <i data-lucide="search" class="w-4 h-4 absolute left-8 top-1/2 -translate-y-1/2 text-muted"></i>
+                <form onsubmit="event.preventDefault(); applyMobileSearch()" class="flex gap-2">
+                    <input id="search-input-m" type="search" enterkeyhint="search" placeholder="Пошук букета" class="fld !rounded-full !bg-paper !border-transparent" style="padding-left:2.6rem">
+                    <button type="submit" class="shrink-0 px-4 rounded-full bg-ink text-white text-sm font-semibold">Знайти</button>
+                </form>
+            </div>
+            <div id="mobile-groups" class="flex-1 overflow-y-auto px-4 py-2"></div>
+        </div>
+    </div>
+
+    <main class="flex-grow w-full">
+
+        <div id="home-sections">
+            <!-- Quick collections -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-5">
+                <div id="quick-row" class="flex flex-wrap gap-2"></div>
+            </div>
+
+            <!-- Hero -->
+            <section class="max-w-7xl mx-auto px-4 sm:px-6 pt-8 pb-14 grid md:grid-cols-[1fr_1fr] gap-10 lg:gap-16 items-center">
+                <div class="order-2 md:order-1">
+                    <p class="text-sm text-accent font-medium mb-4">Квіткова студія в Києві</p>
+                    <h1 id="hero-title" class="font-display font-semibold text-[2.6rem] leading-[1.05] sm:text-6xl lg:text-[4.4rem] mb-5"></h1>
+                    <p id="hero-subtitle" class="text-base sm:text-lg text-muted max-w-md mb-8 leading-relaxed"></p>
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="setFilter('all')" class="px-7 py-3.5 rounded-full bg-ink text-white font-semibold hover:bg-accent transition">Обрати букет</button>
+                        <button onclick="setFilter('diy', '1')" class="px-7 py-3.5 rounded-full border border-ink/20 font-semibold hover:border-ink transition">Зібрати свій</button>
+                    </div>
+                    <dl class="grid grid-cols-3 gap-4 mt-10 max-w-md text-sm">
+                        <div><dt class="text-muted text-xs mb-1">Доставка</dt><dd class="font-semibold">по всьому Києву</dd></div>
+                        <div><dt class="text-muted text-xs mb-1">Листівка</dt><dd class="font-semibold">з вашим текстом</dd></div>
+                        <div><dt class="text-muted text-xs mb-1">Квіти</dt><dd class="font-semibold">свіжі щодня</dd></div>
+                    </dl>
+                </div>
+                <div class="order-1 md:order-2 relative">
+                    <div class="rounded-[28px] overflow-hidden aspect-[4/3] sm:aspect-[5/6] bg-blush">
+                        <img id="hero-img" src="" alt="Букет від KVTKA" class="w-full h-full object-cover">
+                    </div>
+                    <div id="hero-sticker" class="absolute left-4 bottom-4 sm:-left-6 sm:bottom-8 bg-white rounded-2xl shadow-soft px-5 py-4 max-w-[230px]">
+                        <p class="font-display font-semibold text-2xl leading-none text-accent">1 + 1 = 3</p>
+                        <p class="text-xs text-muted mt-1.5">Третій букет у подарунок — знижка рахується в кошику</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stories -->
+            <section class="max-w-7xl mx-auto px-4 sm:px-6 pb-14">
+                <h2 class="font-display font-semibold text-3xl sm:text-4xl mb-6">Оберіть квіти</h2>
+                <div id="stories-row" class="flex gap-5 sm:gap-7 overflow-x-auto no-scrollbar pb-2"></div>
+            </section>
+
+            <!-- Occasions -->
+            <section class="max-w-7xl mx-auto px-4 sm:px-6 pb-14">
+                <h2 class="font-display font-semibold text-3xl sm:text-4xl mb-6">Для кого і з якого приводу</h2>
+                <div id="occasion-tiles" class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4"></div>
+            </section>
+
+            <!-- Promo -->
+            <section id="promo-banner" class="max-w-7xl mx-auto px-4 sm:px-6 pb-14">
+                <div class="bg-blush rounded-[28px] p-7 md:p-12 flex flex-col md:flex-row md:items-center gap-6 md:gap-12">
+                    <p class="font-display font-semibold text-5xl md:text-7xl text-accent leading-none shrink-0">1+1=3</p>
+                    <div class="flex-1">
+                        <h2 id="promo-title" class="font-display font-semibold text-2xl md:text-3xl mb-2"></h2>
+                        <p id="promo-text" class="text-muted leading-relaxed"></p>
+                    </div>
+                    <button onclick="setFilter('all')" class="shrink-0 px-7 py-3.5 rounded-full bg-ink text-white font-semibold hover:bg-accent transition">Обрати три букети</button>
+                </div>
+            </section>
+        </div>
+
+        <!-- Catalog -->
+        <section id="catalog" class="max-w-7xl mx-auto px-4 sm:px-6 pb-20 scroll-mt-36">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-7">
+                <div>
+                    <h2 id="catalog-title" class="font-display font-semibold text-4xl sm:text-5xl">Усі букети</h2>
+                    <div class="flex items-center gap-3 mt-2">
+                        <span id="catalog-count" class="text-sm text-muted"></span>
+                        <button id="catalog-reset" onclick="setFilter('all', null, false)" class="hidden items-center gap-1 text-xs font-semibold border border-line bg-white rounded-full px-3 py-1 hover:border-ink transition"><i data-lucide="x" class="w-3 h-3"></i> Скинути фільтр</button>
+                    </div>
+                </div>
+                <select id="sort-select" onchange="renderProducts()" class="fld sm:!w-56 !rounded-full">
+                    <option value="rec">Рекомендовані</option>
+                    <option value="cheap">Спочатку дешевші</option>
+                    <option value="expensive">Спочатку дорожчі</option>
+                    <option value="new">Спочатку нові</option>
+                </select>
+            </div>
+            <div id="products-grid" class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-8 sm:gap-x-6"></div>
+        </section>
+
+        <!-- ================= ADMIN ================= -->
+        <section id="admin-tab" class="adm hidden max-w-7xl mx-auto px-2 sm:px-6 py-4 sm:py-8 w-full">
+          <div class="bg-[#121215] text-zinc-100 rounded-[24px] sm:rounded-[32px] p-4 sm:p-5 md:p-8">
+            <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Панель адміністратора</h2>
+                    <p class="text-sm text-zinc-400">Товари, фото, наявність, замовлення та налаштування сайту</p>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="publishCatalog()" class="flex items-center gap-2 px-4 py-2.5 bg-rose-500 hover:bg-rose-600 text-white text-xs font-bold rounded-2xl transition"><i data-lucide="cloud-upload" class="w-4 h-4"></i> Опублікувати зміни</button>
+                    <button onclick="setFilter('all', null, false); window.scrollTo({top:0})" class="flex items-center gap-2 px-4 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-bold rounded-2xl transition border border-zinc-700"><i data-lucide="store" class="w-4 h-4"></i> Відкрити сайт</button>
+                    <button onclick="logoutAdmin()" class="flex items-center gap-2 px-4 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-rose-400 text-xs font-bold rounded-2xl transition border border-zinc-700"><i data-lucide="log-out" class="w-4 h-4"></i> Вийти</button>
+                </div>
+            </div>
+
+            <nav class="grid grid-cols-2 sm:flex gap-2 mb-6 sm:mb-8">
+                <button data-admin-tab="overview" onclick="switchAdminTab('overview')" class="admin-tab-btn flex items-center justify-center sm:justify-start gap-2 px-5 py-2.5 rounded-2xl text-xs font-bold transition"><i data-lucide="layout-dashboard" class="w-4 h-4"></i> Огляд</button>
+                <button data-admin-tab="products" onclick="switchAdminTab('products')" class="admin-tab-btn flex items-center justify-center sm:justify-start gap-2 px-5 py-2.5 rounded-2xl text-xs font-bold transition"><i data-lucide="flower-2" class="w-4 h-4"></i> Товари</button>
+                <button data-admin-tab="orders" onclick="switchAdminTab('orders')" class="admin-tab-btn flex items-center justify-center sm:justify-start gap-2 px-5 py-2.5 rounded-2xl text-xs font-bold transition"><i data-lucide="inbox" class="w-4 h-4"></i> Замовлення
+                    <span id="new-orders-badge" class="hidden bg-rose-500 text-white text-[10px] rounded-full px-1.5 min-w-[18px] h-[18px] items-center justify-center"></span>
+                </button>
+                <button data-admin-tab="settings" onclick="switchAdminTab('settings')" class="admin-tab-btn flex items-center justify-center sm:justify-start gap-2 px-5 py-2.5 rounded-2xl text-xs font-bold transition"><i data-lucide="settings" class="w-4 h-4"></i> Налаштування</button>
+            </nav>
+
+            <div id="admin-panel-overview" class="admin-panel space-y-8"></div>
+
+            <div id="admin-panel-products" class="admin-panel hidden">
+                <div class="flex flex-col lg:flex-row gap-3 mb-6">
+                    <div class="relative flex-1">
+                        <i data-lucide="search" class="w-4 h-4 text-zinc-500 absolute left-4 top-1/2 -translate-y-1/2"></i>
+                        <input type="text" id="admin-search" oninput="renderAdminProducts()" placeholder="Пошук за назвою..." class="fld" style="padding-left:2.6rem">
+                    </div>
+                    <select id="admin-cat-filter" onchange="renderAdminProducts()" class="fld lg:!w-56"></select>
+                    <select id="admin-status-filter" onchange="renderAdminProducts()" class="fld lg:!w-52">
+                        <option value="all">Всі статуси</option>
+                        <option value="visible">На вітрині</option>
+                        <option value="hidden">Приховані</option>
+                        <option value="low">Мало на складі</option>
+                        <option value="out">Немає в наявності</option>
+                        <option value="untagged">Без фільтрів (кому/привід)</option>
+                    </select>
+                    <button onclick="openEditor()" class="shrink-0 flex items-center justify-center gap-2 px-5 py-3 bg-rose-500 hover:bg-rose-600 text-white text-sm font-bold rounded-2xl shadow-lg shadow-rose-500/20 transition"><i data-lucide="plus" class="w-4 h-4"></i> Новий товар</button>
+                </div>
+                <p id="admin-count" class="text-xs text-zinc-500 mb-4"></p>
+                <div id="admin-products-list" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5"></div>
+            </div>
+
+            <div id="admin-panel-orders" class="admin-panel hidden">
+                <div id="admin-orders-list" class="space-y-5"></div>
+            </div>
+
+            <div id="admin-panel-settings" class="admin-panel hidden grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-zinc-900/80 border border-zinc-800 rounded-3xl p-6 md:p-8 space-y-5">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2"><i data-lucide="image" class="w-5 h-5 text-rose-500"></i> Головний екран</h3>
+                    <div class="relative rounded-2xl overflow-hidden h-44 bg-zinc-800 border border-zinc-700">
+                        <img id="set-hero-preview" src="" alt="" class="w-full h-full object-cover">
+                        <label for="set-hero-file" class="absolute bottom-3 right-3 flex items-center gap-2 px-4 py-2 bg-black/70 hover:bg-black/90 backdrop-blur text-white text-xs font-bold rounded-xl cursor-pointer transition"><i data-lucide="upload" class="w-4 h-4"></i> Завантажити фото</label>
+                        <input type="file" id="set-hero-file" accept="image/*" class="hidden" onchange="uploadHero(this.files); this.value=''">
+                    </div>
+                    <div class="flex gap-2">
+                        <input type="url" id="set-hero-url" placeholder="або вставте посилання на фото" class="fld">
+                        <button onclick="setHeroUrl()" class="shrink-0 px-4 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl text-xs font-bold text-zinc-200">OK</button>
+                    </div>
+                    <div>
+                        <label class="lbl">Заголовок</label>
+                        <input type="text" id="set-hero-title" oninput="updateSetting('heroTitle', this.value)" class="fld">
+                    </div>
+                    <div>
+                        <label class="lbl">Підзаголовок</label>
+                        <textarea id="set-hero-sub" rows="2" oninput="updateSetting('heroSubtitle', this.value)" class="fld"></textarea>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div><label class="lbl">Телефон магазину</label><input type="tel" id="set-phone" oninput="updateSetting('contactPhone', this.value)" placeholder="+380 …" class="fld"></div>
+                        <div><label class="lbl">Instagram</label><input type="text" id="set-insta" oninput="updateSetting('contactInstagram', this.value)" placeholder="@kvtka" class="fld"></div>
+                        <div><label class="lbl">Години роботи</label><input type="text" id="set-hours" oninput="updateSetting('contactHours', this.value)" placeholder="Щодня 9:00–21:00" class="fld"></div>
+                    </div>
+                    <div>
+                        <label class="lbl">Рядок угорі сайту (фрази через «;»)</label>
+                        <textarea id="set-ticker" rows="2" oninput="updateSetting('ticker', this.value)" class="fld"></textarea>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="bg-zinc-900/80 border border-zinc-800 rounded-3xl p-6 md:p-8 space-y-5">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-bold text-white flex items-center gap-2"><i data-lucide="gift" class="w-5 h-5 text-rose-500"></i> Акція 1+1=3</h3>
+                            <label class="switch"><input type="checkbox" id="set-promo-enabled" onchange="updateSetting('promoEnabled', this.checked)"><span></span></label>
+                        </div>
+                        <p class="text-xs text-zinc-400 -mt-2">Коли вимкнено — банер і наліпки ховаються, а знижка в кошику не рахується.</p>
+                        <div>
+                            <label class="lbl">Заголовок акції</label>
+                            <input type="text" id="set-promo-title" oninput="updateSetting('promoTitle', this.value)" class="fld">
+                        </div>
+                        <div>
+                            <label class="lbl">Текст акції</label>
+                            <textarea id="set-promo-text" rows="2" oninput="updateSetting('promoText', this.value)" class="fld"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="bg-zinc-900/80 border border-zinc-800 rounded-3xl p-6 md:p-8 space-y-4">
+                        <h3 class="text-lg font-bold text-white flex items-center gap-2"><i data-lucide="cloud-upload" class="w-5 h-5 text-rose-500"></i> Публікація для покупців</h3>
+                        <p class="text-xs text-zinc-400">Зміни в адмінці спершу зберігаються на цьому пристрої. Натисніть «Опублікувати зміни» — нові фото і товари одразу завантажаться на сайт, і їх побачать усі покупці. Працює і з телефона.</p>
+                        <div id="publish-status"></div>
+                        <button onclick="publishCatalog()" class="flex items-center gap-2 px-4 py-2.5 bg-rose-500 hover:bg-rose-600 rounded-2xl text-xs font-bold text-white"><i data-lucide="cloud-upload" class="w-4 h-4"></i> Опублікувати зміни</button>
+                    </div>
+
+                    <div class="bg-zinc-900/80 border border-zinc-800 rounded-3xl p-6 md:p-8 space-y-4">
+                        <h3 class="text-lg font-bold text-white flex items-center gap-2"><i data-lucide="hard-drive" class="w-5 h-5 text-rose-500"></i> Резервна копія каталогу</h3>
+                        <p class="text-xs text-zinc-400">Повна копія каталогу разом з фото — щоб перенести адмінку на інший комп'ютер або не втратити зміни при очищенні браузера.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <button onclick="exportCatalog()" class="flex items-center gap-2 px-4 py-2.5 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl text-xs font-bold text-zinc-200"><i data-lucide="download" class="w-4 h-4"></i> Зберегти у файл</button>
+                            <label for="set-import-file" class="flex items-center gap-2 px-4 py-2.5 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl text-xs font-bold text-zinc-200 cursor-pointer"><i data-lucide="upload" class="w-4 h-4"></i> Завантажити з файлу</label>
+                            <input type="file" id="set-import-file" accept="application/json,.json" class="hidden" onchange="importCatalog(this.files); this.value=''">
+                            <button onclick="resetCatalog()" class="flex items-center gap-2 px-4 py-2.5 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 rounded-2xl text-xs font-bold text-rose-300"><i data-lucide="rotate-ccw" class="w-4 h-4"></i> Скинути до початкового</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="site-footer" class="bg-ink text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-10 text-sm">
+            <div>
+                <p class="font-display font-bold text-3xl tracking-[0.12em] mb-3">KVTKA</p>
+                <p class="text-white/60 leading-relaxed">Квіткова студія в Києві. Авторські букети, композиції в коробках і кошиках, подарунки з доставкою по місту.</p>
+            </div>
+            <div id="footer-col-1"></div>
+            <div id="footer-col-2"></div>
+            <div id="footer-col-3"></div>
+        </div>
+        <div class="border-t border-white/10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 py-5 flex flex-col sm:flex-row gap-3 sm:items-center justify-between text-xs text-white/50">
+                <div id="footer-contacts" class="flex flex-wrap gap-x-6 gap-y-1"></div>
+                <button onclick="openAdminModal()" class="text-left hover:text-white/80">Вхід для персоналу</button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ================= PRODUCT EDITOR ================= -->
+    <div id="editor-modal" class="adm fixed inset-0 bg-black/70 backdrop-blur-md z-50 hidden items-stretch md:items-center justify-center md:p-4">
+        <div class="bg-zinc-900 text-zinc-100 border border-zinc-800 md:rounded-3xl w-full max-w-6xl md:max-h-[94vh] flex flex-col shadow-2xl">
+            <div class="flex items-center justify-between px-5 md:px-8 py-4 border-b border-zinc-800">
+                <h3 id="ed-heading" class="text-lg md:text-xl font-extrabold text-white">Новий товар</h3>
+                <button onclick="closeEditor(true)" class="icon-btn bg-zinc-800 text-zinc-300 hover:text-white" aria-label="Закрити"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+
+            <div id="ed-scroll" class="flex-1 overflow-y-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-6 p-5 md:p-8">
+                    <div class="space-y-5" oninput="onEditorInput()">
+
+                        <div class="ed-section">
+                            <div class="ed-h"><span class="ed-num">1</span> Фотографії</div>
+                            <div id="ed-photos" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3"></div>
+                            <input type="file" id="ed-file" accept="image/*" multiple class="hidden" onchange="handleEditorFiles(this.files); this.value=''">
+                            <p id="ed-photo-status" class="text-xs text-rose-300 mt-3 empty:hidden"></p>
+                            <div class="flex gap-2 mt-4">
+                                <input type="url" id="ed-photo-url" placeholder="або вставте посилання на фото (https://...)" class="fld" onkeydown="if(event.key==='Enter'){event.preventDefault();addEditorPhotoUrl()}">
+                                <button type="button" onclick="addEditorPhotoUrl()" class="shrink-0 flex items-center gap-1.5 px-4 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl text-xs font-bold text-zinc-200"><i data-lucide="link" class="w-4 h-4"></i> Додати</button>
+                            </div>
+                            <p class="text-[11px] text-zinc-500 mt-2">Перше фото — головне, воно показується на вітрині. Фото автоматично стискаються, щоб сайт працював швидко.</p>
+                        </div>
+
+                        <div class="ed-section space-y-4">
+                            <div class="ed-h"><span class="ed-num">2</span> Основне</div>
+                            <div>
+                                <label class="lbl">Назва *</label>
+                                <input type="text" id="ed-title" placeholder="Наприклад: Букет Velvet" class="fld">
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="lbl">Тип товару</label>
+                                    <select id="ed-category" class="fld"></select>
+                                </div>
+                                <div>
+                                    <label class="lbl">Наліпка на фото</label>
+                                    <select id="ed-badge" class="fld">
+                                        <option value="">Автоматично</option>
+                                        <option value="hit">Хіт продажу</option>
+                                        <option value="new">Новинка</option>
+                                        <option value="sale">Знижка</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="ed-gift-wrap" class="hidden">
+                                <label class="lbl">Вид подарунка</label>
+                                <select id="ed-gift" class="fld"></select>
+                            </div>
+                            <div>
+                                <label class="lbl">Опис</label>
+                                <textarea id="ed-desc" rows="3" placeholder="Що входить у букет, розмір, упаковка..." class="fld"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="ed-section space-y-4">
+                            <div class="ed-h"><span class="ed-num">3</span> Де показувати на сайті</div>
+                            <p class="text-[11px] text-zinc-500 -mt-2">Відмітьте, у яких розділах меню з'явиться товар. Можна обрати кілька.</p>
+                            <div><p class="lbl">Квіти в складі</p><div id="ed-tags-flowers" class="flex flex-wrap gap-2"></div></div>
+                            <div><p class="lbl">Кому</p><div id="ed-tags-to" class="flex flex-wrap gap-2"></div></div>
+                            <div><p class="lbl">Привід</p><div id="ed-tags-occasions" class="flex flex-wrap gap-2"></div></div>
+                            <div><p class="lbl">Підбірки</p><div id="ed-tags-collections" class="flex flex-wrap gap-2"></div></div>
+                        </div>
+
+                        <div class="ed-section space-y-4">
+                            <div class="ed-h"><span class="ed-num">4</span> Ціна і варіанти</div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="lbl">Ціна (грн) *</label>
+                                    <input type="number" id="ed-price" min="1" placeholder="1800" class="fld">
+                                </div>
+                                <div>
+                                    <label class="lbl">Стара ціна (для знижки)</label>
+                                    <input type="number" id="ed-oldprice" min="0" placeholder="напр. 2200" class="fld">
+                                </div>
+                            </div>
+                            <p id="ed-price-hint" class="hidden text-xs text-amber-300">Є варіанти — ціна на вітрині береться з них («від …»).</p>
+                            <label class="flex items-center gap-3 text-sm text-zinc-300 cursor-pointer">
+                                <span class="switch"><input type="checkbox" id="ed-unit"><span></span></span>
+                                Продаж поштучно (ціна за 1 квітку, покупець обирає кількість)
+                            </label>
+                            <div class="pt-2 border-t border-zinc-800">
+                                <div class="flex items-center justify-between mt-3 mb-3 gap-3">
+                                    <div>
+                                        <p class="text-sm font-bold text-white">Варіанти товару</p>
+                                        <p class="text-[11px] text-zinc-500">Наприклад: «15 шт», «25 шт», «51 шт» або «S / M / L» — кожен зі своєю ціною.</p>
+                                    </div>
+                                    <button type="button" onclick="addVariant()" class="shrink-0 flex items-center gap-1.5 px-3 py-2 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-xl text-xs font-bold text-zinc-200"><i data-lucide="plus" class="w-3.5 h-3.5"></i> Варіант</button>
+                                </div>
+                                <div id="ed-variants" class="space-y-2"></div>
+                            </div>
+                        </div>
+
+                        <div class="ed-section space-y-4">
+                            <div class="ed-h"><span class="ed-num">5</span> Наявність</div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <label class="flex items-center gap-3 p-3 rounded-2xl border border-zinc-700 cursor-pointer has-[:checked]:border-rose-500 has-[:checked]:bg-rose-500/5">
+                                    <input type="radio" name="ed-stock-mode" value="unlimited" class="accent-rose-500 w-4 h-4">
+                                    <span><span class="block text-sm font-bold text-white">Під замовлення</span><span class="text-[11px] text-zinc-500">Кількість не обмежена</span></span>
+                                </label>
+                                <label class="flex items-center gap-3 p-3 rounded-2xl border border-zinc-700 cursor-pointer has-[:checked]:border-rose-500 has-[:checked]:bg-rose-500/5">
+                                    <input type="radio" name="ed-stock-mode" value="limited" class="accent-rose-500 w-4 h-4">
+                                    <span><span class="block text-sm font-bold text-white">Рахувати залишок</span><span class="text-[11px] text-zinc-500">Зменшується після замовлення</span></span>
+                                </label>
+                            </div>
+                            <div>
+                                <label class="lbl">Кількість на складі</label>
+                                <input type="number" id="ed-stock" min="0" placeholder="напр. 10" class="fld">
+                            </div>
+                            <label class="flex items-center gap-3 text-sm text-zinc-300 cursor-pointer pt-1">
+                                <span class="switch"><input type="checkbox" id="ed-visible"><span></span></span>
+                                Показувати на сайті
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="lg:sticky lg:top-0">
+                            <p class="lbl">Як побачить покупець</p>
+                            <div id="ed-preview" class="pointer-events-none bg-paper text-ink rounded-3xl p-4"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between gap-3 px-5 md:px-8 py-4 border-t border-zinc-800">
+                <p id="ed-error" class="text-xs text-rose-400 font-semibold"></p>
+                <div class="flex gap-2 shrink-0">
+                    <button onclick="closeEditor(true)" class="px-5 py-3 border border-zinc-700 rounded-2xl text-sm font-bold text-zinc-300 hover:bg-zinc-800">Скасувати</button>
+                    <button onclick="saveEditor()" class="px-6 py-3 bg-rose-500 hover:bg-rose-600 rounded-2xl text-sm font-bold text-white shadow-lg shadow-rose-500/20">Зберегти товар</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="product-modal" onclick="if(event.target===this) closeProductModal()" class="fixed inset-0 bg-ink/50 backdrop-blur-sm z-50 hidden items-center justify-center p-3 sm:p-4">
+        <div class="bg-white rounded-[24px] shadow-soft max-w-4xl w-full max-h-[92vh] overflow-y-auto flex flex-col md:flex-row relative">
+            <button onclick="closeProductModal()" class="absolute top-3 right-3 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:bg-paper transition" aria-label="Закрити"><i data-lucide="x" class="w-5 h-5"></i></button>
+            <div class="w-full md:w-1/2 shrink-0 p-3 md:pr-0 flex flex-col">
+                <div class="rounded-[18px] overflow-hidden bg-blush">
+                    <img id="m-img" src="" alt="" class="w-full h-80 md:h-[460px] object-cover">
+                </div>
+                <div id="m-thumbs" class="flex gap-2 pt-3 overflow-x-auto no-scrollbar"></div>
+            </div>
+            <div class="p-6 md:p-8 md:w-1/2 flex flex-col justify-between">
+                <div>
+                    <div id="m-tags" class="flex flex-wrap gap-1.5 mb-3 pr-10"></div>
+                    <h3 id="m-title" class="font-display font-semibold text-3xl leading-tight mb-3"></h3>
+                    <p id="m-desc" class="text-muted text-sm leading-relaxed mb-6"></p>
+
+                    <div id="m-variants-wrap" class="mb-6 hidden">
+                        <span class="text-sm font-semibold block mb-2">Розмір букета</span>
+                        <div id="m-variants" class="flex flex-wrap gap-2"></div>
+                    </div>
+
+                    <div class="mb-6">
+                        <span class="text-sm font-semibold block mb-2" id="m-qty-label">Кількість</span>
+                        <div class="flex items-center gap-3">
+                            <div class="flex items-center border border-line rounded-full">
+                                <button onclick="changeModalQty(-1)" class="w-10 h-10 flex items-center justify-center hover:text-accent" aria-label="Менше"><i data-lucide="minus" class="w-4 h-4"></i></button>
+                                <span id="m-qty" class="w-10 text-center font-semibold">1</span>
+                                <button onclick="changeModalQty(1)" class="w-10 h-10 flex items-center justify-center hover:text-accent" aria-label="Більше"><i data-lucide="plus" class="w-4 h-4"></i></button>
+                            </div>
+                            <span id="m-stock-note" class="text-xs font-semibold"></span>
+                        </div>
+                        <div id="m-quick" class="hidden mt-3">
+                            <div class="flex flex-wrap gap-2">
+                                <button onclick="setModalQty(9)" class="m-quick-btn px-3.5 py-1.5 rounded-full text-xs font-semibold border border-line">9 шт</button>
+                                <button onclick="setModalQty(15)" class="m-quick-btn px-3.5 py-1.5 rounded-full text-xs font-semibold border border-line">15 шт</button>
+                                <button onclick="setModalQty(25)" class="m-quick-btn px-3.5 py-1.5 rounded-full text-xs font-semibold border border-line">25 шт</button>
+                                <button onclick="setModalQty(51)" class="m-quick-btn px-3.5 py-1.5 rounded-full text-xs font-semibold border border-line">51 шт</button>
+                                <button onclick="setModalQty(101)" class="m-quick-btn px-3.5 py-1.5 rounded-full text-xs font-semibold border border-line">101 шт</button>
+                            </div>
+                            <p class="text-xs text-muted mt-2">У букет традиційно збирають непарну кількість квітів.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between border-t border-line pt-5 gap-3">
+                    <div>
+                        <span id="m-price-label" class="text-xs text-muted block">Ціна</span>
+                        <span id="m-oldprice" class="text-sm text-muted line-through mr-1"></span>
+                        <span id="m-price" class="font-semibold text-2xl"></span>
+                    </div>
+                    <button id="m-add-btn" class="bg-ink hover:bg-accent disabled:bg-line disabled:text-muted text-white px-7 py-3.5 rounded-full font-semibold text-sm transition">У кошик</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Drawer -->
+    <div id="cart-drawer" onclick="if(event.target===this) toggleCart(false)" class="fixed inset-0 bg-ink/40 backdrop-blur-sm z-50 hidden justify-end">
+        <div class="bg-white w-full max-w-md h-full flex flex-col">
+            <div class="flex items-center justify-between px-6 h-16 border-b border-line">
+                <h3 class="font-display font-semibold text-2xl">Кошик</h3>
+                <button onclick="toggleCart(false)" class="w-9 h-9 rounded-full hover:bg-paper flex items-center justify-center" aria-label="Закрити"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+
+            <div class="flex-1 overflow-y-auto px-6">
+                <div id="cart-items" class="py-5 space-y-4"></div>
+                <div id="promo-hint"></div>
+
+                <div id="checkout-form" class="space-y-3 pb-6">
+                    <h4 class="font-semibold text-sm pt-2">Хто замовляє</h4>
+                    <input type="text" id="order-name" placeholder="Ваше ім'я *" autocomplete="name" class="fld">
+                    <input type="tel" id="order-phone" placeholder="Телефон (+380) *" autocomplete="tel" class="fld">
+
+                    <h4 class="font-semibold text-sm pt-3">Куди і коли</h4>
+                    <input type="text" id="order-address" placeholder="Адреса доставки у Києві *" class="fld">
+                    <div class="grid grid-cols-2 gap-3">
+                        <input type="date" id="order-date" onchange="updateTimeSlots()" class="fld">
+                        <select id="order-time" class="fld">
+                            <option value="Якнайшвидше">Якнайшвидше</option>
+                            <option value="09:00–12:00">09:00–12:00</option>
+                            <option value="12:00–15:00">12:00–15:00</option>
+                            <option value="15:00–18:00">15:00–18:00</option>
+                            <option value="18:00–21:00">18:00–21:00</option>
+                        </select>
+                    </div>
+                    <input type="text" id="order-recipient" placeholder="Ім'я та телефон отримувача (якщо інша людина)" class="fld">
+                    <textarea id="order-card-text" rows="2" maxlength="300" placeholder="Текст для листівки (необов'язково)" class="fld"></textarea>
+                    <label class="flex items-center gap-2 text-sm cursor-pointer">
+                        <input type="checkbox" id="order-anonymous" class="w-4 h-4" style="accent-color:#9E2F57">
+                        Анонімна доставка (не називати відправника)
+                    </label>
+                    <textarea id="order-comment" rows="2" placeholder="Коментар до замовлення" class="fld"></textarea>
+                </div>
+            </div>
+
+            <div id="cart-footer" class="border-t border-line px-6 py-5 space-y-2.5">
+                <div class="flex justify-between text-sm text-muted">
+                    <span>Сума</span><span id="cart-subtotal">0 грн</span>
+                </div>
+                <div id="cart-discount-row" class="hidden justify-between text-sm font-semibold text-accent">
+                    <span>Акція 1+1=3</span><span id="cart-discount">0 грн</span>
+                </div>
+                <div class="flex justify-between items-baseline">
+                    <span class="font-semibold">Разом</span>
+                    <span id="cart-total" class="font-semibold text-2xl">0 грн</span>
+                </div>
+                <p id="order-error" class="hidden text-sm text-accent leading-snug"></p>
+                <button id="checkout-btn" onclick="checkout()" class="w-full bg-ink hover:bg-accent disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold py-4 rounded-full transition">Оформити замовлення</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Password Modal -->
+    <div id="admin-modal" onclick="if(event.target===this) closeAdminModal()" class="fixed inset-0 bg-ink/50 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-[24px] shadow-soft p-8 w-full max-w-sm">
+            <h3 class="font-display font-semibold text-3xl mb-1">Вхід в адмінку</h3>
+            <p class="text-sm text-muted mb-6">Введіть пароль адміністратора</p>
+            <input type="password" id="admin-password" autocomplete="current-password" placeholder="Пароль" onkeydown="if(event.key==='Enter') loginAdmin()" class="fld mb-4">
+            <div class="flex gap-3">
+                <button onclick="closeAdminModal()" class="w-1/2 py-3 border border-line rounded-full text-sm font-semibold hover:border-ink">Скасувати</button>
+                <button onclick="loginAdmin()" class="w-1/2 bg-ink text-white rounded-full text-sm font-semibold hover:bg-accent">Увійти</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-6 left-1/2 z-[60] opacity-0 pointer-events-none transition-all duration-300 bg-ink text-white text-sm font-medium px-5 py-3 rounded-full shadow-soft flex items-center gap-2 max-w-[90vw]" style="transform: translate(-50%, 20px);">
+        <i data-lucide="check" class="w-4 h-4 shrink-0"></i><span id="toast-text"></span>
+    </div>
+
+    <script>
+        // ================== НАЛАШТУВАННЯ ==================
+        // Пароль адмінки. УВАГА: поки сайт без сервера, пароль видно у коді сторінки.
+        const ADMIN_PASSWORD = 'admin123';
+        // Telegram: вставте токен бота і chat_id, щоб замовлення приходили вам у Telegram.
+        const TELEGRAM = { botToken: '', chatId: '' };
+        // Змініть версію, коли редагуєте initialProducts у коді — щоб відвідувачі побачили новий каталог.
+        const CATALOG_VERSION = '10';
+        // ===================================================
+
+        const unsplash = (id, w = 900) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`;
+
+        // Тип товару (формат)
+        const FORMATS = {
+            bouquets: { l: 'Букети',          e: '💐' },
+            mixed:    { l: 'Збірні букети',   e: '🌼' },
+            bento:    { l: 'Бенто-букети',    e: '🍱' },
+            boxes:    { l: 'Квіти в коробці', e: '🎁' },
+            baskets:  { l: 'Кошики квітів',   e: '🧺' },
+            cards:    { l: 'Листівки',        e: '💌' },
+            gifts:    { l: 'Подарунки',       e: '🎀' }
+        };
+        const FLOWER_FORMATS = ['bouquets', 'mixed', 'bento', 'boxes', 'baskets'];
+
+        const FLOWERS = {
+            roses:      { l: 'Троянди',         e: '🌹' },
+            sprayRoses: { l: 'Кущові троянди',  e: '🌸' },
+            tulips:     { l: 'Тюльпани',        e: '🌷' },
+            peonies:    { l: 'Півонії',         e: '🩷' },
+            hydrangeas: { l: 'Гортензії',       e: '💠' },
+            eustoma:    { l: 'Еустома',         e: '🤍' }
+        };
+        const RECIPIENTS = {
+            beloved:   { l: 'Коханій',     e: '💘' },
+            mom:       { l: 'Мамі',        e: '🌸' },
+            friend:    { l: 'Подрузі',     e: '👯' },
+            colleague: { l: 'Колезі',      e: '💼' },
+            man:       { l: 'Чоловікові',  e: '🧔' },
+            kid:       { l: 'Дитині',      e: '🧸' }
+        };
+        const OCCASIONS = {
+            birthday:    { l: 'День народження',   e: '🎂' },
+            love:        { l: 'Зізнання в коханні', e: '💌' },
+            anniversary: { l: 'Річниця',           e: '🥂' },
+            wedding:     { l: 'Весілля',           e: '💍' },
+            thanks:      { l: 'Подякувати',        e: '🙏' },
+            sorry:       { l: 'Попросити вибачення', e: '🥺' },
+            justbecause: { l: 'Просто так',        e: '✌️' }
+        };
+        const COLLECTIONS = {
+            hit:  { l: 'Хіт продажу',       e: '🔥' },
+            hot:  { l: 'Гаряча пропозиція', e: '⚡' },
+            week: { l: 'Букети тижня',      e: '✨' }
+        };
+        const GIFT_TYPES = {
+            sweets:    { l: 'Солодощі',            e: '🍫' },
+            candles:   { l: 'Свічки та аромати',   e: '🕯️' },
+            tea:       { l: 'Чай і кава',          e: '☕' },
+            wine:      { l: 'Ігристе',             e: '🥂' },
+            cosmetics: { l: 'Догляд і аксесуари',  e: '🧴' }
+        };
+        const PRICE_RANGES = [
+            { k: 'p1', l: 'До 1 500 грн',         min: 0,    max: 1500 },
+            { k: 'p2', l: '1 500 – 2 500 грн',    min: 1500, max: 2500 },
+            { k: 'p3', l: '2 500 – 3 500 грн',    min: 2500, max: 3500 },
+            { k: 'p4', l: '3 500 – 5 000 грн',    min: 3500, max: 5000 },
+            { k: 'p5', l: 'Від 5 000 грн',        min: 5000, max: Infinity }
+        ];
+
+        const BADGES = {
+            hit:  { label: 'Хіт',     cls: 'bg-ink text-white' },
+            new:  { label: 'Новинка', cls: 'bg-sage text-ink' },
+            sale: { label: 'Знижка',  cls: 'bg-accent text-white' }
+        };
+
+        const ORDER_STATUSES = {
+            new:       { label: 'Нове',          cls: 'bg-rose-500/20 text-rose-300 border-rose-500/30' },
+            confirmed: { label: 'Підтверджене',  cls: 'bg-amber-500/20 text-amber-300 border-amber-500/30' },
+            delivered: { label: 'Доставлене',    cls: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' },
+            cancelled: { label: 'Скасоване',     cls: 'bg-zinc-700/60 text-zinc-400 border-zinc-600' }
+        };
+
+        const DEFAULT_SETTINGS = {
+            heroImage: unsplash('photo-1523694576729-dc99e9c0f9b4', 1400),
+            heroTitle: 'Квіти, які скажуть усе за вас',
+            heroSubtitle: 'Авторські букети, бенто та композиції в коробках. Збираємо в день доставки й веземо по всьому Києву.',
+            ticker: 'Доставка по всьому Києву; Акція 1+1=3 на букети; Листівка з вашим текстом у подарунок; Анонімна доставка на прохання',
+            promoEnabled: true,
+            promoTitle: 'Третій букет — у подарунок',
+            promoText: 'Додайте в кошик три будь-які букети чи композиції, і найдешевший з них буде безкоштовним. Знижка рахується автоматично.',
+            contactPhone: '',
+            contactInstagram: '',
+            contactHours: ''
+        };
+
+        const initialProducts = [
+            // --- ТЮЛЬПАНИ ---
+            { id: 1, title: 'Піоноподібні Рожеві Тюльпани "Columbus" (25 шт)', category: 'tulips', price: 1750, image: 'https://images.unsplash.com/photo-1586968295564-92fd7572718b?auto=format&fit=crop&w=800&q=80', desc: 'Пишні махрові тюльпани ексклюзивного сорту з Німеччини/Нідерландів.' },
+            { id: 2, title: 'Бахромчасті Білі Тюльпани "Snow Crystal" (19 шт)', category: 'tulips', price: 1550, image: 'https://images.unsplash.com/photo-1589994160839-163cd867cfe8?auto=format&fit=crop&w=800&q=80', desc: 'Сніжно-білі бахромчасті бутони у стильному матовому пакуванні.' },
+            { id: 3, title: 'Карамельні Тюльпани "Brown Sugar" (31 шт)', category: 'tulips', price: 2350, image: 'https://images.unsplash.com/photo-1617176756162-447320192d98?auto=format&fit=crop&w=800&q=80', desc: 'Унікальний кавово-карамельний відтінок, абсолютний хіт сезонних трендів.' },
+            { id: 4, title: 'Сонячні Жовті Тюльпани "Strong Gold" (25 шт)', category: 'tulips', price: 1650, image: 'https://images.unsplash.com/photo-1559407848-bc459cb7dbba?auto=format&fit=crop&w=800&q=80', desc: 'Яскраві сонячні тюльпани з міцним стеблом і соковитою зеленню.' },
+            { id: 5, title: 'Елітні Фіолетові Тюльпани "Negrita" (21 шт)', category: 'tulips', price: 1700, image: 'https://images.unsplash.com/photo-1615669527168-8766827a7159?auto=format&fit=crop&w=800&q=80', desc: 'Насичений глибокий відтінок бузкового для витончених подарунків.' },
+            { id: 6, title: 'Авторський Мікс Голландських Тюльпанів (35 шт)', category: 'tulips', price: 2600, image: 'https://images.unsplash.com/photo-1518701005037-d53b1f67bb1c?auto=format&fit=crop&w=800&q=80', desc: 'Збірний об’ємний букет різнокольорових сортових тюльпанів.' },
+            { id: 7, title: 'Преміум Тюльпани "Apeldoorn Elite" (51 шт)', category: 'tulips', price: 3450, image: 'https://images.unsplash.com/photo-1586973699006-2a096c90f847?auto=format&fit=crop&w=800&q=80', desc: 'Розкішний великий букет червоних тюльпанів із жовтою окантовкою.' },
+            { id: 8, title: 'Ніжні Пастельні Тюльпани "Salmon Prince" (15 шт)', category: 'tulips', price: 1350, image: 'https://images.unsplash.com/photo-1614256924919-6e0dcf6a4921?auto=format&fit=crop&w=800&q=80', desc: 'Лососево-рожеві бутони в мінімалістичній корейській упаковці.' },
+            { id: 9, title: 'Махрові Червоні Тюльпани "Miranda" (19 шт)', category: 'tulips', price: 1800, image: 'https://images.unsplash.com/photo-1615385639736-362b69696227?auto=format&fit=crop&w=800&q=80', desc: 'Великі важкі бутони піоноподібної форми яскраво-червоного кольору.' },
+            { id: 10, title: 'Поштучні Голландські Тюльпани (Мікс на вибір)', category: 'tulips', price: 65, unit: true, image: 'https://images.unsplash.com/photo-1569215249429-dddd4c8eb4e9?auto=format&fit=crop&w=800&q=80', desc: 'Ціна вказана за 1 штуку. Обирайте потрібну кількість та формуйте букет.' },
+
+            // --- ТРОЯНДИ ---
+            { id: 11, title: 'Кущові Троянди "Misty Bubbles" (15 гілок)', category: 'roses', price: 3100, image: 'https://images.unsplash.com/photo-1572454591674-2739f30d8c40?auto=format&fit=crop&w=800&q=80', desc: 'Розкішні кульоподібні піоноподібні кущові троянди пастельного кольору.' },
+            { id: 12, title: 'Монобукет Білих Троянд "Mondial" (25 шт)', category: 'roses', price: 2700, image: 'https://images.unsplash.com/photo-1570112008549-e4181988109f?auto=format&fit=crop&w=800&q=80', desc: 'Елегантні преміум троянди довжиною 60 см у фірмовій стрічці.' },
+            { id: 13, title: 'Піонові Троянди "Ohara Peach" (15 шт)', category: 'roses', price: 2950, image: 'https://images.unsplash.com/photo-1523693916903-027d144a2b7d?auto=format&fit=crop&w=800&q=80', desc: 'Ніжно-персиковий ароматний сорт для особливих моментів.' },
+            { id: 14, title: 'Оксамитові Червоні Троянди "Explorer" (51 шт)', category: 'roses', price: 4800, image: 'https://images.unsplash.com/photo-1589095181425-c038b3871b6a?auto=format&fit=crop&w=800&q=80', desc: 'Величний та статусний букет глибоких червоних троянд.' },
+            { id: 15, title: 'Кущові Троянди "Bombastic" (19 гілок)', category: 'roses', price: 3400, image: 'https://images.unsplash.com/photo-1608027790251-5e0c80d043d9?auto=format&fit=crop&w=800&q=80', desc: 'Ніжно-рожеві зефірні бутони кущових троянд.' },
+            { id: 16, title: 'Елітні Рожеві Троянди "Aqua" (35 шт)', category: 'roses', price: 3200, image: 'https://images.unsplash.com/photo-1553578622-34d24027ce18?auto=format&fit=crop&w=800&q=80', desc: 'Сорт з великим бутоном та насиченим рожевим кольором.' },
+            { id: 17, title: 'Преміум Троянди "Pink Floyd" (25 шт)', category: 'roses', price: 2900, image: 'https://images.unsplash.com/photo-1512056495345-913a0c261dc8?auto=format&fit=crop&w=800&q=80', desc: 'Насичено-малиновий благородний відтінок із стійким ароматом.' },
+            { id: 18, title: 'Кремові Троянди "Pioneer" (31 шт)', category: 'roses', price: 3150, image: 'https://images.unsplash.com/photo-1557925923-6885735abfb1?auto=format&fit=crop&w=800&q=80', desc: 'Теплий кремовий відтінок у вишуканому корейському оформленні.' },
+            { id: 19, title: 'Двоколірні Троянди "High Magic" (25 шт)', category: 'roses', price: 2800, image: 'https://images.unsplash.com/photo-1556712691-5c39e0e32a8e?auto=format&fit=crop&w=800&q=80', desc: 'Яскравий сорт із плавним переходом від жовтого до вогняно-червоного.' },
+            { id: 20, title: 'Міні-Букет Кущових Троянд "Jana" (9 гілок)', category: 'roses', price: 1950, image: 'https://images.unsplash.com/photo-1615654673360-29898e4f857f?auto=format&fit=crop&w=800&q=80', desc: 'Компактний, але надзвичайно пишний та ніжний букет.' },
+            { id: 21, title: 'Ексклюзивні Сині Троянди (19 шт)', category: 'roses', price: 3600, image: 'https://images.unsplash.com/photo-1601568547556-0ccf70e8e3c8?auto=format&fit=crop&w=800&q=80', desc: 'Незвичайний дизайнерський сорт для яскравих сюрпризів.' },
+            { id: 22, title: 'Поштучні Елітні Троянди (Мікс на вибір)', category: 'roses', price: 95, unit: true, image: 'https://images.unsplash.com/photo-1518709779341-56cf4535e94b?auto=format&fit=crop&w=800&q=80', desc: 'Ціна за 1 штуку. Обирайте сорт і кількість для персонального букета.' },
+
+            // --- ПІВОНІЇ, ГОРТЕНЗІЇ ---
+            { id: 23, title: 'Рожеві Півонії "Coral Sunset" (11 шт)', category: 'peony', price: 3800, image: 'https://images.unsplash.com/photo-1579664872746-55e2a805d705?auto=format&fit=crop&w=800&q=80', desc: 'Свіжі ароматні півонії преміум якості.' },
+            { id: 24, title: 'Блакитна Гортензія та Рожеві Троянди', category: 'peony', price: 3400, image: 'https://images.unsplash.com/photo-1610841802859-94794ea50e1b?auto=format&fit=crop&w=800&q=80', desc: 'Повітряне і стильне поєднання об’ємної гортензії та пастельних троянд.' },
+            { id: 25, title: 'Монобукет Білосніжних Гортензій (5 гілок)', category: 'peony', price: 2900, image: 'https://images.unsplash.com/photo-1598462764297-de0493e05925?auto=format&fit=crop&w=800&q=80', desc: 'Пишні хмари гортензій у витонченому корейському пакуванні.' },
+            { id: 26, title: 'Елітні Білі Півонії "Duchesse de Nemours" (9 шт)', category: 'peony', price: 3500, image: 'https://images.unsplash.com/photo-1652164055648-102e8719ae05?auto=format&fit=crop&w=800&q=80', desc: 'Ніжний аромат та витончені кремово-білі бутони.' },
+            { id: 27, title: 'Мікс: Рожеві Півонії та Евкаліпт (15 шт)', category: 'peony', price: 4600, image: 'https://images.unsplash.com/photo-1482715091246-822e47d61e1c?auto=format&fit=crop&w=800&q=80', desc: 'Розкішний об’ємний букет із свіжою зеленню.' },
+            { id: 28, title: 'Дует: Гортензія та Кущові Піонові Троянди', category: 'peony', price: 3950, image: 'https://images.unsplash.com/photo-1711512209308-06179f150f3e?auto=format&fit=crop&w=800&q=80', desc: 'Неймовірно ніжне поєднання фактур.' },
+            { id: 29, title: 'Яскраві Малинові Півонії "Sarah Bernhardt" (11 шт)', category: 'peony', price: 3700, image: 'https://images.unsplash.com/photo-1560583035-6d14e41fac5f?auto=format&fit=crop&w=800&q=80', desc: 'Легендарний сорт із насиченим солодким ароматом.' },
+            { id: 30, title: 'Рожева Гортензія в Дизайнерській Плівці', category: 'peony', price: 2750, image: 'https://images.unsplash.com/photo-1636534706501-9122a5a604d5?auto=format&fit=crop&w=800&q=80', desc: 'Стильний акцентний букет для стильних подарунків.' },
+            { id: 31, title: 'Преміум Букет: Півонії, Гортензія, Еустома', category: 'peony', price: 4900, image: 'https://images.unsplash.com/photo-1560582591-f6939a30b5f2?auto=format&fit=crop&w=800&q=80', desc: 'Авторська композиція VIP-рівня.' },
+            { id: 32, title: 'Блакитна та Рожева Гортензії (Дует)', category: 'peony', price: 3200, image: 'https://images.unsplash.com/photo-1626419972503-2029b6529ed4?auto=format&fit=crop&w=800&q=80', desc: 'Контрастне та гармонійне рішення.' },
+            { id: 33, title: 'Коралові Півонії "Coral Charm" (9 шт)', category: 'peony', price: 3600, image: 'https://images.unsplash.com/photo-1539622230226-3d4eb483b3f2?auto=format&fit=crop&w=800&q=80', desc: 'Змінюють насиченість кольору під час розпускання.' },
+            { id: 34, title: 'Об’ємна Композиція з Гортензій (3 великі гілки)', category: 'peony', price: 2850, image: 'https://images.unsplash.com/photo-1641366638032-557d4a999d80?auto=format&fit=crop&w=800&q=80', desc: 'Мінімалістично та надзвичайно ефектно.' },
+
+            // --- У КОРОБЦІ ---
+            { id: 35, title: 'Оксамитова Коробка "Pink Velvet" з трояндами', category: 'boxes', price: 3250, image: 'https://images.unsplash.com/photo-1560583035-79c3e11ae176?auto=format&fit=crop&w=800&q=80', desc: 'Композиція у стильній оксамитовій коробці з міцною основою.' },
+            { id: 36, title: 'Шляпна Коробка "French Macaron" (Мікс тюльпанів)', category: 'boxes', price: 2900, image: 'https://images.unsplash.com/photo-1759420319818-1a2c8684a584?auto=format&fit=crop&w=800&q=80', desc: 'Яскрава весняна композиція у циліндричній коробці.' },
+            { id: 37, title: 'Велика Коробка з Піоновими Трояндами "Red Naomi"', category: 'boxes', price: 4500, image: 'https://images.unsplash.com/photo-1581264692636-3cf6f29655c2?auto=format&fit=crop&w=800&q=80', desc: 'Статусний подарунок для найдорожчих.' },
+            { id: 38, title: 'Міні-сумочка з квітами "Summer Vibe"', category: 'boxes', price: 1950, image: 'https://images.unsplash.com/photo-1644248423441-bc7c5dcebeb6?auto=format&fit=crop&w=800&q=80', desc: 'Зручний сучасний формат композиції у прозорій сумочці.' },
+            { id: 39, title: 'Кругла Коробка з пастельними кущовими трояндами', category: 'boxes', price: 3100, image: 'https://images.unsplash.com/photo-1589217289787-879b47f6edab?auto=format&fit=crop&w=800&q=80', desc: 'Ніжне зефірне поєднання.' },
+            { id: 40, title: 'Цілісна Композиція з Гортензією в коробці', category: 'boxes', price: 3400, image: 'https://images.unsplash.com/photo-1686945996715-ab5a0b74188f?auto=format&fit=crop&w=800&q=80', desc: 'Сучасна флористика без необхідності пошуку вази.' },
+            { id: 41, title: 'Чорна Стильна Коробка з контрастними трояндами', category: 'boxes', price: 3800, image: 'https://images.unsplash.com/photo-1599791095997-5cf38bb5ff69?auto=format&fit=crop&w=800&q=80', desc: 'Преміальний дорогий стиль.' },
+            { id: 42, title: 'Коробка-серце з червоними трояндами', category: 'boxes', price: 4200, image: 'https://images.unsplash.com/photo-1580740132087-761c25cacbf6?auto=format&fit=crop&w=800&q=80', desc: 'Класика зізнання в коханні.' },
+            { id: 43, title: 'Пастельна Коробка з тюльпанами та евкаліптом', category: 'boxes', price: 2600, image: 'https://images.unsplash.com/photo-1605341778220-2652cd6c97c6?auto=format&fit=crop&w=800&q=80', desc: 'Легкий та свіжий презент.' },
+            { id: 44, title: 'Дизайнерська прямокутна коробка VIP', category: 'boxes', price: 5100, image: 'https://images.unsplash.com/photo-1660885900184-fe13ca69392c?auto=format&fit=crop&w=800&q=80', desc: 'Розкішний об’ємний мікс найдорожчих сортів квітів.' },
+            { id: 45, title: 'Коробка з міксом кущових троянд та гортензій', category: 'boxes', price: 3900, image: 'https://images.unsplash.com/photo-1660885900181-0605ed9f7a69?auto=format&fit=crop&w=800&q=80', desc: 'Вишукане оформлення.' },
+            { id: 46, title: 'Компактна коробка "Good Morning"', category: 'boxes', price: 2100, image: 'https://images.unsplash.com/photo-1660885900178-964c51a9e176?auto=format&fit=crop&w=800&q=80', desc: 'Ідеально для ранкового сюрпризу.' },
+
+            // --- ЛИСТІВКИ ---
+            { id: 47, title: 'Крафтова мінімалістична листівка', category: 'cards', price: 120, image: 'https://images.unsplash.com/photo-1566125882500-87e10f726cdc?auto=format&fit=crop&w=800&q=80', desc: 'Щільний фактурний картон для підпису особистих побажань від руки.' },
+            { id: 48, title: 'Лаконічний конверт з відбитком', category: 'cards', price: 120, image: 'https://images.unsplash.com/photo-1649019489428-70f505daacd6?auto=format&fit=crop&w=800&q=80', desc: 'Мінімалістичний чистий бланк у конверті.' },
+            { id: 49, title: 'Естетична листівка "Warm Notes"', category: 'cards', price: 120, image: 'https://images.unsplash.com/photo-1723398840367-4d1993648a6a?auto=format&fit=crop&w=800&q=80', desc: 'Чистий простір під ваші щирі слова.' },
+            { id: 50, title: 'Листівка "Кохаю тебе" з золотим тисненням', category: 'cards', price: 130, image: 'https://images.unsplash.com/photo-1614991711936-628079f824c3?auto=format&fit=crop&w=800&q=80', desc: 'Стильний класичний дизайн.' },
+            { id: 51, title: 'Листівка "Happy Birthday, Queen!"', category: 'cards', price: 130, image: 'https://images.unsplash.com/photo-1554894872-1a01c75f7513?auto=format&fit=crop&w=800&q=80', desc: 'Яскраве та стильне привітання.' },
+            { id: 52, title: 'Дизайнерська листівка "Ти моє все"', category: 'cards', price: 120, image: 'https://images.unsplash.com/photo-1554894872-4e447dadac68?auto=format&fit=crop&w=800&q=80', desc: 'Мінімалізм для найближчих.' },
+            { id: 53, title: 'Бланк із сургучевою печаткою KVTKA', category: 'cards', price: 150, image: 'https://images.unsplash.com/photo-1648994605501-fe0a391d2653?auto=format&fit=crop&w=800&q=80', desc: 'Ручна робота та преміум папір.' },
+            { id: 54, title: 'Листівка "Здійснення мрій!"', category: 'cards', price: 120, image: 'https://images.unsplash.com/photo-1567794947078-3b0d66d77224?auto=format&fit=crop&w=800&q=80', desc: 'Теплі слова для іменинника.' },
+            { id: 55, title: 'Мінімалістична картка з сухоцвітами', category: 'cards', price: 160, image: 'https://images.unsplash.com/photo-1694285453486-ead6e637e524?auto=format&fit=crop&w=800&q=80', desc: 'Декорована живими міні-квітами.' },
+            { id: 56, title: 'Листівка "Дякую, що ти є"', category: 'cards', price: 120, image: 'https://images.unsplash.com/photo-1567794636765-5e4869f627e1?auto=format&fit=crop&w=800&q=80', desc: 'Витончений шрифт та чистий розворот.' },
+            { id: 57, title: 'Листівка "Обіймаю міцно"', category: 'cards', price: 120, image: 'https://images.unsplash.com/photo-1526554850534-7c78330d5f90?auto=format&fit=crop&w=800&q=80', desc: 'Затишне привітання.' },
+            { id: 58, title: 'Фірмовий конверт з відбитком серця', category: 'cards', price: 140, image: 'https://images.unsplash.com/photo-1648994605536-10633d3e0886?auto=format&fit=crop&w=800&q=80', desc: 'Елегантний формат.' },
+            { id: 59, title: 'Листівка "Для тебе, особливої"', category: 'cards', price: 120, image: 'https://images.unsplash.com/photo-1717250960166-386b661ac390?auto=format&fit=crop&w=800&q=80', desc: 'Ніжний пастельний фон.' },
+            { id: 60, title: 'Подарункова картка-комплімент', category: 'cards', price: 100, image: 'https://images.unsplash.com/photo-1675006241335-76ca4945f43e?auto=format&fit=crop&w=800&q=80', desc: 'Маленька картка для букета.' },
+            { id: 61, title: 'Авторська листівка "Київська весна"', category: 'cards', price: 130, image: 'https://images.unsplash.com/photo-1627618998627-70a92a874cc2?auto=format&fit=crop&w=800&q=80', desc: 'Лімітована серія принтів.' },
+
+            // --- ПОДАРУНКИ ---
+            { id: 62, title: 'Натуральна Арома-Свічка "Soy & Fig"', category: 'gifts', price: 480, image: 'https://images.unsplash.com/photo-1612293905607-b003de9e54fb?auto=format&fit=crop&w=800&q=80', desc: 'Соєвий віск із затишним ароматом інжиру.' },
+            { id: 63, title: 'Крафтовий Шоколад "Salted Caramel"', category: 'gifts', price: 290, image: 'https://images.unsplash.com/photo-1623660053975-cf75a8be0908?auto=format&fit=crop&w=800&q=80', desc: 'Шоколад ручної роботи з соленою карамелью.' },
+            { id: 64, title: 'Подарунковий Набір "Tea & Honey"', category: 'gifts', price: 750, image: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?auto=format&fit=crop&w=800&q=80', desc: 'Елітний чай та карпатський мед у подарунковій коробці.' },
+            { id: 65, title: 'Аромадифузор для дому "White Musk"', category: 'gifts', price: 690, image: 'https://images.unsplash.com/photo-1750433101188-8284e112d250?auto=format&fit=crop&w=800&q=80', desc: 'Стійкий та ніжний аромат чистоти та мускусу.' },
+            { id: 66, title: 'Набір макаронів (6 шт) "French Pastry"', category: 'gifts', price: 390, image: 'https://images.unsplash.com/photo-1569864358642-9d1684040f43?auto=format&fit=crop&w=800&q=80', desc: 'Свіжі французькі тістечка з різними смаками.' },
+            { id: 67, title: 'Еко-цукерки ручної роботи з горіхами', category: 'gifts', price: 340, image: 'https://images.unsplash.com/photo-1638194645412-1d0b4c53ffed?auto=format&fit=crop&w=800&q=80', desc: 'Корисні солодощі без цукру.' },
+            { id: 68, title: 'Міні-пляшка ігристого вина "Prosecco"', category: 'gifts', price: 320, image: 'https://images.unsplash.com/photo-1586161659976-2ff9a33f20b0?auto=format&fit=crop&w=800&q=80', desc: 'Чудове доповнення до святкового букета.' },
+            { id: 69, title: 'Косметичний набір для догляду "Rose Petals"', category: 'gifts', price: 950, image: 'https://images.unsplash.com/photo-1474625121024-7595bfbc57ac?auto=format&fit=crop&w=800&q=80', desc: 'Сіль для ванн та натуральне мило ручної роботи.' },
+            { id: 70, title: 'Шовкова резинка для волосся (Scrunchie)', category: 'gifts', price: 220, image: 'https://images.unsplash.com/photo-1671272981038-970ceaa8edb6?auto=format&fit=crop&w=800&q=80', desc: 'Стильний та корисний аксесуар.' },
+            { id: 71, title: 'Подарункова коробка живого чаю "Green Jasmine"', category: 'gifts', price: 420, image: 'https://images.unsplash.com/photo-1647330503232-77fc20c12375?auto=format&fit=crop&w=800&q=80', desc: 'Ароматний зелений чай з пелюстками жасмину.' },
+            { id: 72, title: 'Преміум кавові зерна в крафтовій пачці', category: 'gifts', price: 450, image: 'https://images.unsplash.com/photo-1685798830559-c116586a0d33?auto=format&fit=crop&w=800&q=80', desc: '100% арабіка для ідеального ранку.' },
+            { id: 73, title: 'Набір святкових свічок ручної роботи (3 шт)', category: 'gifts', price: 560, image: 'https://images.unsplash.com/photo-1601479604588-68d9e6d386b5?auto=format&fit=crop&w=800&q=80', desc: 'Стильні інтер’єрні свічки соєвого воску.' }
+        ];
+
+        // Нові формати: бенто, кошики, збірні
+        const EXTRA_PRODUCTS = [
+            { id: 74, title: 'Бенто-букет "Little Love" з кущовими трояндами', category: 'bento', price: 1290, image: 'https://images.unsplash.com/photo-1644248422980-8e0eb75a1557?auto=format&fit=crop&w=800&q=80', desc: 'Мініатюрний букет у крафтовій коробочці — ідеальний комплімент без приводу.' },
+            { id: 75, title: 'Бенто-букет "Spring Bite" з тюльпанами', category: 'bento', price: 990, image: 'https://images.unsplash.com/photo-1582034721135-c262febea55b?auto=format&fit=crop&w=800&q=80', desc: 'Сім тюльпанів у компактній коробочці, яку зручно передати в руки.' },
+            { id: 76, title: 'Бенто-букет "Peony Pop" з півоніями', category: 'bento', price: 1490, image: 'https://images.unsplash.com/photo-1575178094668-132dc931ad35?auto=format&fit=crop&w=800&q=80', desc: 'Три пишні півонії та трохи зелені в міні-форматі.' },
+            { id: 77, title: 'Бенто-набір "Sweet Box": квіти + тістечка', category: 'bento', price: 1390, image: 'https://images.unsplash.com/photo-1652346107876-58d7354ce9b8?auto=format&fit=crop&w=800&q=80', desc: 'Маленький букет і два макарони в одній коробці.' },
+            { id: 78, title: 'Кошик троянд "Garden Party" (51 шт)', category: 'baskets', price: 5600, image: 'https://images.unsplash.com/photo-1605018209684-aa1f085cac8f?auto=format&fit=crop&w=800&q=80', desc: 'Великий плетений кошик з трояндами — на ювілей чи річницю.' },
+            { id: 79, title: 'Кошик "Provence" з гортензіями та трояндами', category: 'baskets', price: 4700, image: 'https://images.unsplash.com/photo-1494336956603-39a3641efa1c?auto=format&fit=crop&w=800&q=80', desc: 'Повітряна композиція у світлих тонах, стоїть без вази.' },
+            { id: 80, title: 'Кошик тюльпанів "Easter Morning" (45 шт)', category: 'baskets', price: 3900, image: 'https://images.unsplash.com/photo-1469317835793-6d02c2392778?auto=format&fit=crop&w=800&q=80', desc: 'Весняний кошик з різнокольоровими тюльпанами.' },
+            { id: 81, title: 'Кошик півоній "Royal"', category: 'baskets', price: 6200, image: 'https://images.unsplash.com/photo-1494336877155-7fb9c6984f0a?auto=format&fit=crop&w=800&q=80', desc: 'Розкішний кошик сезонних півоній для особливої події.' },
+            { id: 82, title: 'Збірний букет "Ягідний смузі" з трояндами', category: 'mixed', price: 2450, image: 'https://images.unsplash.com/photo-1589100534833-475e31a17b4e?auto=format&fit=crop&w=800&q=80', desc: 'Малинові й рожеві відтінки, кущові троянди та сезонна зелень.' },
+            { id: 83, title: 'Збірний букет "Польові мрії" з еустомою', category: 'mixed', price: 1890, image: 'https://images.unsplash.com/photo-1531120364508-a6b656c3e78d?auto=format&fit=crop&w=800&q=80', desc: 'Легкий букет у стилі польових квітів.' },
+            { id: 84, title: 'Збірний букет "Lavender Haze" з еустомою та трояндами', category: 'mixed', price: 2750, image: 'https://images.unsplash.com/photo-1602136303098-f5aa2b9c9df9?auto=format&fit=crop&w=800&q=80', desc: 'Лавандові та білі квіти у фактурному пакуванні.' }
+        ];
+
+        // Стартові фільтри для товарів: to — кому, oc — привід, c — підбірки, o — стара ціна, g — вид подарунка
+        const PRODUCT_TAGS = {
+            1: { to: ['beloved', 'friend'], oc: ['birthday', 'justbecause'], c: ['hit'] },
+            2: { to: ['mom', 'colleague'], oc: ['thanks', 'justbecause'] },
+            3: { to: ['friend', 'beloved'], oc: ['justbecause', 'birthday'], c: ['week'] },
+            4: { to: ['mom', 'colleague', 'friend'], oc: ['birthday', 'thanks'] },
+            5: { to: ['beloved', 'friend'], oc: ['justbecause'] },
+            6: { to: ['mom', 'friend', 'colleague'], oc: ['birthday'], o: 2990 },
+            7: { to: ['beloved'], oc: ['love', 'anniversary'] },
+            8: { to: ['friend', 'colleague'], oc: ['justbecause', 'thanks'], o: 1550 },
+            9: { to: ['beloved'], oc: ['love', 'sorry'] },
+            10: { to: ['beloved', 'mom', 'friend'], oc: ['birthday', 'justbecause'] },
+            11: { to: ['beloved', 'mom'], oc: ['birthday', 'anniversary'], c: ['hit'] },
+            12: { to: ['mom', 'colleague'], oc: ['wedding', 'thanks'] },
+            13: { to: ['beloved', 'friend'], oc: ['birthday', 'love'], c: ['week'] },
+            14: { to: ['beloved'], oc: ['love', 'anniversary', 'sorry'], c: ['hit'] },
+            15: { to: ['beloved', 'friend', 'kid'], oc: ['birthday', 'justbecause'] },
+            16: { to: ['beloved', 'mom'], oc: ['birthday'], o: 3600 },
+            17: { to: ['beloved'], oc: ['love', 'anniversary'] },
+            18: { to: ['mom', 'colleague'], oc: ['thanks', 'wedding'] },
+            19: { to: ['friend', 'colleague', 'man'], oc: ['birthday'] },
+            20: { to: ['friend', 'kid', 'colleague'], oc: ['justbecause', 'thanks'], o: 2250 },
+            21: { to: ['friend', 'man'], oc: ['birthday'] },
+            22: { to: ['beloved', 'mom', 'friend'], oc: ['birthday', 'love'] },
+            23: { to: ['beloved', 'mom'], oc: ['birthday'], c: ['hit'] },
+            24: { to: ['mom', 'friend'], oc: ['birthday', 'thanks'] },
+            25: { to: ['mom', 'colleague'], oc: ['wedding', 'thanks'] },
+            26: { to: ['beloved'], oc: ['wedding', 'love'], c: ['week'] },
+            27: { to: ['beloved', 'mom'], oc: ['anniversary'], o: 5200 },
+            28: { to: ['friend', 'mom'], oc: ['birthday'] },
+            29: { to: ['beloved', 'mom'], oc: ['love', 'birthday'], c: ['hit'] },
+            30: { to: ['friend', 'kid'], oc: ['justbecause'] },
+            31: { to: ['beloved'], oc: ['anniversary', 'wedding'] },
+            32: { to: ['friend', 'colleague'], oc: ['birthday'] },
+            33: { to: ['beloved', 'friend'], oc: ['justbecause'] },
+            34: { to: ['mom', 'colleague'], oc: ['thanks'], o: 3200 },
+            35: { to: ['beloved', 'friend'], oc: ['birthday'], c: ['hit'] },
+            36: { to: ['friend', 'mom'], oc: ['birthday'] },
+            37: { to: ['beloved'], oc: ['love', 'anniversary'] },
+            38: { to: ['friend', 'kid', 'colleague'], oc: ['justbecause'], c: ['week'] },
+            39: { to: ['mom', 'friend'], oc: ['birthday'] },
+            40: { to: ['mom', 'colleague'], oc: ['thanks'] },
+            41: { to: ['man', 'beloved'], oc: ['birthday'] },
+            42: { to: ['beloved'], oc: ['love', 'sorry'], c: ['hit'] },
+            43: { to: ['friend', 'kid'], oc: ['justbecause'], o: 2900 },
+            44: { to: ['beloved', 'mom'], oc: ['anniversary'] },
+            45: { to: ['mom'], oc: ['birthday'] },
+            46: { to: ['beloved', 'friend'], oc: ['justbecause', 'sorry'] },
+            50: { oc: ['love'] }, 51: { oc: ['birthday'] }, 52: { oc: ['love'] }, 54: { oc: ['birthday'] }, 56: { oc: ['thanks'] }, 57: { oc: ['justbecause'] },
+            62: { g: 'candles' }, 63: { g: 'sweets' }, 64: { g: 'tea' }, 65: { g: 'candles' }, 66: { g: 'sweets' }, 67: { g: 'sweets' },
+            68: { g: 'wine' }, 69: { g: 'cosmetics' }, 70: { g: 'cosmetics' }, 71: { g: 'tea' }, 72: { g: 'tea' }, 73: { g: 'candles' },
+            74: { to: ['beloved', 'friend'], oc: ['love', 'justbecause'], c: ['hit'] },
+            75: { to: ['friend', 'colleague'], oc: ['justbecause', 'thanks'], c: ['week'] },
+            76: { to: ['beloved', 'friend'], oc: ['birthday'] },
+            77: { to: ['friend', 'kid'], oc: ['birthday'], o: 1590 },
+            78: { to: ['beloved', 'mom'], oc: ['anniversary'] },
+            79: { to: ['mom', 'colleague'], oc: ['birthday', 'thanks'] },
+            80: { to: ['mom'], oc: ['justbecause'], c: ['week'] },
+            81: { to: ['beloved'], oc: ['anniversary', 'wedding'], c: ['hit'] },
+            82: { to: ['friend'], oc: ['birthday'], c: ['hit'] },
+            83: { to: ['friend', 'colleague'], oc: ['justbecause', 'thanks'], o: 2190 },
+            84: { to: ['beloved'], oc: ['love'], c: ['week'] }
+        };
+        const MIXED_IDS = new Set([24, 27, 28, 31]);
+        const PHOTOS = {
+            1: 'photo-1586968295564-92fd7572718b',
+            2: 'photo-1589994160839-163cd867cfe8',
+            3: 'photo-1617176756162-447320192d98',
+            4: 'photo-1559407848-bc459cb7dbba',
+            5: 'photo-1615669527168-8766827a7159',
+            6: 'photo-1518701005037-d53b1f67bb1c',
+            7: 'photo-1586973699006-2a096c90f847',
+            8: 'photo-1614256924919-6e0dcf6a4921',
+            9: 'photo-1615385639736-362b69696227',
+            10: 'photo-1569215249429-dddd4c8eb4e9',
+            11: 'photo-1572454591674-2739f30d8c40',
+            12: 'photo-1570112008549-e4181988109f',
+            13: 'photo-1523693916903-027d144a2b7d',
+            14: 'photo-1589095181425-c038b3871b6a',
+            15: 'photo-1608027790251-5e0c80d043d9',
+            16: 'photo-1553578622-34d24027ce18',
+            17: 'photo-1512056495345-913a0c261dc8',
+            18: 'photo-1557925923-6885735abfb1',
+            19: 'photo-1556712691-5c39e0e32a8e',
+            20: 'photo-1615654673360-29898e4f857f',
+            21: 'photo-1601568547556-0ccf70e8e3c8',
+            22: 'photo-1518709779341-56cf4535e94b',
+            23: 'photo-1579664872746-55e2a805d705',
+            24: 'photo-1610841802859-94794ea50e1b',
+            25: 'photo-1598462764297-de0493e05925',
+            26: 'photo-1652164055648-102e8719ae05',
+            27: 'photo-1482715091246-822e47d61e1c',
+            28: 'photo-1711512209308-06179f150f3e',
+            29: 'photo-1560583035-6d14e41fac5f',
+            30: 'photo-1636534706501-9122a5a604d5',
+            31: 'photo-1560582591-f6939a30b5f2',
+            32: 'photo-1626419972503-2029b6529ed4',
+            33: 'photo-1539622230226-3d4eb483b3f2',
+            34: 'photo-1641366638032-557d4a999d80',
+            35: 'photo-1560583035-79c3e11ae176',
+            36: 'photo-1759420319818-1a2c8684a584',
+            37: 'photo-1581264692636-3cf6f29655c2',
+            38: 'photo-1644248423441-bc7c5dcebeb6',
+            39: 'photo-1589217289787-879b47f6edab',
+            40: 'photo-1686945996715-ab5a0b74188f',
+            41: 'photo-1599791095997-5cf38bb5ff69',
+            42: 'photo-1580740132087-761c25cacbf6',
+            43: 'photo-1605341778220-2652cd6c97c6',
+            44: 'photo-1660885900184-fe13ca69392c',
+            45: 'photo-1660885900181-0605ed9f7a69',
+            46: 'photo-1660885900178-964c51a9e176',
+            47: 'photo-1566125882500-87e10f726cdc',
+            48: 'photo-1649019489428-70f505daacd6',
+            49: 'photo-1723398840367-4d1993648a6a',
+            50: 'photo-1614991711936-628079f824c3',
+            51: 'photo-1554894872-1a01c75f7513',
+            52: 'photo-1554894872-4e447dadac68',
+            53: 'photo-1648994605501-fe0a391d2653',
+            54: 'photo-1567794947078-3b0d66d77224',
+            55: 'photo-1694285453486-ead6e637e524',
+            56: 'photo-1567794636765-5e4869f627e1',
+            57: 'photo-1526554850534-7c78330d5f90',
+            58: 'photo-1648994605536-10633d3e0886',
+            59: 'photo-1717250960166-386b661ac390',
+            60: 'photo-1675006241335-76ca4945f43e',
+            61: 'photo-1627618998627-70a92a874cc2',
+            62: 'photo-1612293905607-b003de9e54fb',
+            63: 'photo-1623660053975-cf75a8be0908',
+            64: 'photo-1558642452-9d2a7deb7f62',
+            65: 'photo-1750433101188-8284e112d250',
+            66: 'photo-1569864358642-9d1684040f43',
+            67: 'photo-1638194645412-1d0b4c53ffed',
+            68: 'photo-1586161659976-2ff9a33f20b0',
+            69: 'photo-1474625121024-7595bfbc57ac',
+            70: 'photo-1671272981038-970ceaa8edb6',
+            71: 'photo-1647330503232-77fc20c12375',
+            72: 'photo-1685798830559-c116586a0d33',
+            73: 'photo-1601479604588-68d9e6d386b5',
+            74: 'photo-1644248422980-8e0eb75a1557',
+            75: 'photo-1582034721135-c262febea55b',
+            76: 'photo-1575178094668-132dc931ad35',
+            77: 'photo-1652346107876-58d7354ce9b8',
+            78: 'photo-1605018209684-aa1f085cac8f',
+            79: 'photo-1494336956603-39a3641efa1c',
+            80: 'photo-1469317835793-6d02c2392778',
+            81: 'photo-1494336877155-7fb9c6984f0a',
+            82: 'photo-1589100534833-475e31a17b4e',
+            83: 'photo-1531120364508-a6b656c3e78d',
+            84: 'photo-1602136303098-f5aa2b9c9df9'
+        };
+        // Старі фото-заглушки, які автоматично замінюються на нові
+        const OLD_PLACEHOLDERS = ['1520763185298-1b434c919102', '1563241527-3004b7be0ffd', '1525310072745-f49212b5ac6d', '1518709268805-4e9042af9f23', '1561181286-d3fee7d55364', '1533616688419-b7a585564566', '1558882224-dda166733046', '1526047932273-341f2a7631f9', '1562690868-60bbe7293e94', '1582794543139-8ac9cb0f7b11', '1586075010923-2dd4570fb338', '1595238020283-bc03a95696dd', '1544716278-ca5e3f4abd8c', '1603006905003-be475563bc59', '1548907040-4baa42d10919'];
+
+
+        // ================== ЗБЕРІГАННЯ ==================
+        const KEYS = {
+            products: 'kv_products',
+            catalogVersion: 'kv_catalog_version',
+            cart: 'kv_cart_v8',
+            orders: 'kv_orders_v8',
+            settings: 'kv_settings'
+        };
+
+        function load(key, fallback) {
+            try {
+                const raw = localStorage.getItem(key);
+                return raw ? JSON.parse(raw) : fallback;
+            } catch (e) { return fallback; }
+        }
+        function store(key, value) {
+            try { localStorage.setItem(key, JSON.stringify(value)); return true; } catch (e) { return false; }
+        }
+
+        // Фото, завантажені з комп'ютера, зберігаються в IndexedDB (там багато місця)
+        const imageCache = new Map();
+        const IDB = {
+            db: null,
+            open() {
+                return new Promise((resolve, reject) => {
+                    if (!window.indexedDB) return reject(new Error('no idb'));
+                    const req = indexedDB.open('kvtka', 1);
+                    req.onupgradeneeded = () => req.result.createObjectStore('images');
+                    req.onsuccess = () => { IDB.db = req.result; resolve(IDB.db); };
+                    req.onerror = () => reject(req.error);
+                });
+            },
+            store(mode) { return IDB.db.transaction('images', mode).objectStore('images'); },
+            put(key, blob) {
+                return new Promise((resolve, reject) => {
+                    const r = IDB.store('readwrite').put(blob, key);
+                    r.onsuccess = () => resolve(); r.onerror = () => reject(r.error);
+                });
+            },
+            get(key) {
+                return new Promise((resolve, reject) => {
+                    const r = IDB.store('readonly').get(key);
+                    r.onsuccess = () => resolve(r.result); r.onerror = () => reject(r.error);
+                });
+            },
+            del(key) {
+                return new Promise(resolve => {
+                    const r = IDB.store('readwrite').delete(key);
+                    r.onsuccess = () => resolve(); r.onerror = () => resolve();
+                });
+            },
+            all() {
+                return new Promise((resolve, reject) => {
+                    const out = [];
+                    const cur = IDB.store('readonly').openCursor();
+                    cur.onsuccess = () => { const c = cur.result; if (c) { out.push([c.key, c.value]); c.continue(); } else resolve(out); };
+                    cur.onerror = () => reject(cur.error);
+                });
+            }
+        };
+
+        const resolveImg = src => (src && src.startsWith('idb:')) ? (imageCache.get(src) || '') : (src || '');
+
+        function compressImage(file, maxSize = 1400, quality = 0.85) {
+            return new Promise((resolve, reject) => {
+                const url = URL.createObjectURL(file);
+                const img = new Image();
+                img.onload = () => {
+                    let w = img.naturalWidth, h = img.naturalHeight;
+                    const scale = Math.min(1, maxSize / Math.max(w, h));
+                    w = Math.round(w * scale); h = Math.round(h * scale);
+                    const canvas = document.createElement('canvas');
+                    canvas.width = w; canvas.height = h;
+                    const ctx = canvas.getContext('2d');
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillRect(0, 0, w, h);
+                    ctx.drawImage(img, 0, 0, w, h);
+                    URL.revokeObjectURL(url);
+                    canvas.toBlob(b => b ? resolve(b) : reject(new Error('blob')), 'image/jpeg', quality);
+                };
+                img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('image')); };
+                img.src = url;
+            });
+        }
+
+        const blobToDataURL = blob => new Promise((resolve, reject) => {
+            const r = new FileReader();
+            r.onload = () => resolve(r.result); r.onerror = () => reject(r.error);
+            r.readAsDataURL(blob);
+        });
+
+        async function storeImageBlob(blob) {
+            if (IDB.db) {
+                const key = 'idb:' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+                await IDB.put(key, blob);
+                imageCache.set(key, URL.createObjectURL(blob));
+                return key;
+            }
+            return await blobToDataURL(blob);
+        }
+
+        async function storeImageFile(file, maxSize = 1400) {
+            return storeImageBlob(await compressImage(file, maxSize));
+        }
+
+        async function gcImages() {
+            if (!IDB.db) return;
+            const used = new Set([settings.heroImage]);
+            products.forEach(p => p.images.forEach(s => used.add(s)));
+            if (editorDraft) editorDraft.images.forEach(s => used.add(s));
+            for (const key of [...imageCache.keys()]) {
+                if (!used.has(key)) {
+                    await IDB.del(key);
+                    URL.revokeObjectURL(imageCache.get(key));
+                    imageCache.delete(key);
+                }
+            }
+        }
+
+        // ================== МОДЕЛЬ ТОВАРУ ==================
+        function detectFlowers(text) {
+            const t = String(text || '').toLowerCase();
+            const out = [];
+            if (t.includes('троянд')) out.push(t.includes('кущов') ? 'sprayRoses' : 'roses');
+            if (t.includes('тюльпан')) out.push('tulips');
+            if (t.includes('півон')) out.push('peonies');
+            if (t.includes('гортенз')) out.push('hydrangeas');
+            if (t.includes('еустом')) out.push('eustoma');
+            return out;
+        }
+
+        const onlyKeys = (arr, dict) => Array.isArray(arr) ? [...new Set(arr.filter(k => dict[k]))] : null;
+
+        function normalizeProduct(p) {
+            const tags = PRODUCT_TAGS[p.id] || {};
+            let category = p.category;
+            if (['tulips', 'roses', 'peony'].includes(category)) category = MIXED_IDS.has(p.id) ? 'mixed' : 'bouquets';
+            if (!FORMATS[category]) category = 'bouquets';
+
+            let images = Array.isArray(p.images) && p.images.length ? p.images.filter(Boolean) : (p.image ? [p.image] : []);
+            if (PHOTOS[p.id]) images = images.map((src, i) => (i === 0 && OLD_PLACEHOLDERS.some(o => String(src).includes(o))) ? unsplash(PHOTOS[p.id], 800) : src);
+            const variants = Array.isArray(p.variants)
+                ? p.variants.filter(v => v && String(v.name || '').trim()).map(v => ({ name: String(v.name).trim(), price: Number(v.price) || 0 }))
+                : [];
+            const stock = (p.stock === null || p.stock === undefined || p.stock === '') ? null : Math.max(0, Math.floor(Number(p.stock) || 0));
+            const oldPriceRaw = p.oldPrice === undefined ? tags.o : p.oldPrice;
+
+            return {
+                id: p.id,
+                title: String(p.title || '').trim(),
+                category,
+                price: Number(p.price) || 0,
+                oldPrice: Number(oldPriceRaw) > 0 ? Number(oldPriceRaw) : null,
+                unit: !!p.unit,
+                images,
+                desc: String(p.desc || ''),
+                variants,
+                stock,
+                hidden: !!p.hidden,
+                badge: BADGES[p.badge] ? p.badge : '',
+                flowers: onlyKeys(p.flowers, FLOWERS) ?? detectFlowers(p.title),
+                to: onlyKeys(p.to, RECIPIENTS) ?? (tags.to || []),
+                occasions: onlyKeys(p.occasions, OCCASIONS) ?? (tags.oc || []),
+                collections: onlyKeys(p.collections, COLLECTIONS) ?? (tags.c || []),
+                giftType: GIFT_TYPES[p.giftType] ? p.giftType : (p.giftType === undefined && GIFT_TYPES[tags.g] ? tags.g : '')
+            };
+        }
+
+        let products;
+        const storedVersion = load(KEYS.catalogVersion, null);
+        const storedProducts = load(KEYS.products, null);
+        if (Array.isArray(storedProducts) && ['8', '9', CATALOG_VERSION].includes(storedVersion)) {
+            products = storedProducts.map(normalizeProduct);
+            if (storedVersion === '8') {
+                // Переїзд зі старої версії: додаємо нові формати (бенто, кошики, збірні)
+                const ids = new Set(products.map(p => p.id));
+                EXTRA_PRODUCTS.forEach(p => { if (!ids.has(p.id)) products.push(normalizeProduct(p)); });
+            }
+        } else {
+            products = [...initialProducts, ...EXTRA_PRODUCTS].map(normalizeProduct);
+        }
+
+        let settings = { ...DEFAULT_SETTINGS, ...load(KEYS.settings, {}) };
+        // Старий заголовок і текст акції з попередньої версії замінюємо на нові
+        if (['Атмосферна флористика для вашого стилю', 'Квіти, які скажуть усе за тебе'].includes(settings.heroTitle)) settings.heroTitle = DEFAULT_SETTINGS.heroTitle;
+        if (String(settings.heroImage).includes('photo-1563241527-3004b7be0ffd')) settings.heroImage = DEFAULT_SETTINGS.heroImage;
+        if (String(settings.ticker).includes('Свіжі квіти щодня; Анонімна')) settings.ticker = DEFAULT_SETTINGS.ticker;
+        if (settings.heroSubtitle?.startsWith('Авторські композиції в глибоких')) settings.heroSubtitle = DEFAULT_SETTINGS.heroSubtitle;
+
+        let cart = load(KEYS.cart, [])
+            .filter(i => i && i.id && i.qty > 0)
+            .map(i => ({ key: i.key || `${i.id}|${i.v ?? -1}`, id: i.id, v: i.v ?? -1, qty: i.qty }));
+        let orders = load(KEYS.orders, null) || load('kv_orders_dark_v7', []);
+
+        let isAdmin = false;
+        let activeModalProduct = null;
+        let modalQty = 1, modalVariant = -1, modalImgIdx = 0;
+        let activeFilter = { type: 'all', value: null };
+        let currentAdminTab = 'overview';
+        let shuffleOrder = new Map();
+        let editorDraft = null;
+
+        function saveProducts() {
+            const ok = store(KEYS.products, products) && store(KEYS.catalogVersion, CATALOG_VERSION);
+            if (!ok) showToast('Не вдалося зберегти каталог: у браузері закінчилось місце');
+            return ok;
+        }
+        function saveCart() { store(KEYS.cart, cart); }
+        function saveOrders() { store(KEYS.orders, orders); }
+        function saveSettings() { store(KEYS.settings, settings); }
+
+        // ================== ДОПОМІЖНІ ==================
+        const $ = id => document.getElementById(id);
+        const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        const formatPrice = n => `${Math.round(n).toLocaleString('uk-UA')} грн`;
+        const getProduct = id => products.find(p => p.id === id);
+        const isFlowerFormat = p => FLOWER_FORMATS.includes(p.category);
+        const isPromoEligible = p => settings.promoEnabled && isFlowerFormat(p) && !p.unit;
+        const refreshIcons = () => { if (window.lucide) lucide.createIcons(); };
+        const minPrice = p => p.variants.length ? Math.min(...p.variants.map(v => v.price)) : p.price;
+        const linePrice = (p, v) => (v >= 0 && p.variants[v]) ? p.variants[v].price : p.price;
+        const cartQtyOf = id => cart.filter(i => i.id === id).reduce((s, i) => s + i.qty, 0);
+        const available = p => p.stock === null ? Infinity : p.stock - cartQtyOf(p.id);
+        const isOut = p => p.stock === 0;
+        const isSale = p => !!(p.oldPrice && p.oldPrice > p.price && !p.variants.length);
+        const isHot = p => p.collections.includes('hot') || isSale(p);
+        const isHit = p => p.collections.includes('hit') || p.badge === 'hit';
+
+        function pluralBouquet(n) {
+            const m10 = n % 10, m100 = n % 100;
+            if (m10 === 1 && m100 !== 11) return 'букет';
+            if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return 'букети';
+            return 'букетів';
+        }
+        function pluralItems(n) {
+            const m10 = n % 10, m100 = n % 100;
+            if (m10 === 1 && m100 !== 11) return 'товар';
+            if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return 'товари';
+            return 'товарів';
+        }
+
+        function buildShuffle() {
+            shuffleOrder = new Map(products.map(p => [p.id, Math.random()]));
+        }
+
+        let toastTimer;
+        function showToast(text) {
+            const t = $('toast');
+            $('toast-text').textContent = text;
+            t.classList.add('toast-show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => t.classList.remove('toast-show'), 2600);
+        }
+
+        // ================== ФІЛЬТРИ ТА НАВІГАЦІЯ ==================
+        function productMatches(p, f) {
+            switch (f.type) {
+                case 'all': return isFlowerFormat(p);
+                case 'format': return p.category === f.value;
+                case 'flower': return p.flowers.includes(f.value);
+                case 'to': return p.to.includes(f.value);
+                case 'occasion': return p.occasions.includes(f.value);
+                case 'collection':
+                    if (f.value === 'hit') return isHit(p);
+                    if (f.value === 'hot') return isHot(p);
+                    return p.collections.includes(f.value);
+                case 'price': {
+                    const r = PRICE_RANGES.find(x => x.k === f.value);
+                    const m = minPrice(p);
+                    return !!r && isFlowerFormat(p) && !p.unit && m >= r.min && m < r.max;
+                }
+                case 'gift': return p.category === 'gifts' && p.giftType === f.value;
+                case 'diy': return p.unit;
+                case 'search': {
+                    const q = String(f.value || '').toLowerCase();
+                    return (p.title + ' ' + p.desc + ' ' + (FORMATS[p.category]?.l || '') + ' ' + p.flowers.map(k => FLOWERS[k].l).join(' ')).toLowerCase().includes(q);
+                }
+            }
+            return true;
+        }
+
+        function filterTitle(f) {
+            switch (f.type) {
+                case 'all': return 'Усі букети';
+                case 'format': return FORMATS[f.value]?.l || 'Каталог';
+                case 'flower': return FLOWERS[f.value]?.l || 'Квіти';
+                case 'to': return f.value === 'beloved' ? 'Квіти коханій' : `Квіти ${RECIPIENTS[f.value]?.l.toLowerCase() || ''}`;
+                case 'occasion': return OCCASIONS[f.value]?.l || 'Привід';
+                case 'collection': return COLLECTIONS[f.value]?.l || 'Підбірка';
+                case 'price': return `Букети ${PRICE_RANGES.find(x => x.k === f.value)?.l.toLowerCase() || ''}`;
+                case 'gift': return GIFT_TYPES[f.value]?.l || 'Подарунки';
+                case 'diy': return 'Зібрати свій букет';
+                case 'search': return `Пошук: «${f.value}»`;
+            }
+            return 'Каталог';
+        }
+
+        const visibleProducts = () => products.filter(p => !p.hidden);
+        const countFor = (type, value) => visibleProducts().filter(p => productMatches(p, { type, value })).length;
+
+        const QUICK = [
+            { t: 'collection', v: 'hit',      l: 'Хіт продажу' },
+            { t: 'to',         v: 'beloved',  l: 'Квіти коханій' },
+            { t: 'collection', v: 'hot',      l: 'Гаряча пропозиція' },
+            { t: 'occasion',   v: 'birthday', l: 'День народження' },
+            { t: 'collection', v: 'week',     l: 'Букети тижня' },
+            { t: 'format',     v: 'bouquets', l: 'Букети' },
+            { t: 'format',     v: 'mixed',    l: 'Збірні букети' },
+            { t: 'format',     v: 'bento',    l: 'Бенто-букети' },
+            { t: 'format',     v: 'boxes',    l: 'Квіти в коробці' },
+            { t: 'format',     v: 'baskets',  l: 'Кошики квітів' }
+        ];
+
+        function navGroups() {
+            const fromDict = (t, dict) => Object.entries(dict).map(([k, v]) => ({ t, v: k, l: v.l }));
+            return [
+                { id: 'flowers', label: 'Квіти', items: [...fromDict('flower', FLOWERS), { t: 'diy', v: '1', l: 'Поштучно — зібрати свій' }] },
+                { id: 'to', label: 'Кому', items: fromDict('to', RECIPIENTS) },
+                { id: 'occ', label: 'Привід', items: fromDict('occasion', OCCASIONS) },
+                { id: 'gifts', label: 'Подарунки', items: [{ t: 'format', v: 'cards', l: 'Листівки' }, ...fromDict('gift', GIFT_TYPES), { t: 'format', v: 'gifts', l: 'Усі подарунки' }] },
+                { id: 'price', label: 'За ціною', items: PRICE_RANGES.map(r => ({ t: 'price', v: r.k, l: r.l })) }
+            ];
+        }
+
+        function buildNav() {
+            const groups = navGroups();
+            $('dd-row').innerHTML = groups.map(g => `
+                <div class="nav-dd relative">
+                    <button onclick="toggleDD('${g.id}')" id="dd-btn-${g.id}" aria-expanded="false" class="flex items-center gap-1 px-3.5 py-1.5 rounded-full text-sm font-medium hover:bg-paper transition">
+                        ${g.label} <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-muted"></i>
+                    </button>
+                    <div id="dd-${g.id}" class="dd-panel hidden absolute left-0 top-full mt-2 w-72 bg-white border border-line rounded-2xl shadow-soft p-2 z-50">
+                        ${g.items.map(it => {
+                            const n = countFor(it.t, it.v);
+                            return `<button onclick="setFilter('${it.t}', '${it.v}')" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-paper text-left text-sm ${n ? '' : 'opacity-40'}">
+                                <span class="flex-1">${esc(it.l)}</span><span class="text-xs text-muted">${n}</span>
+                            </button>`;
+                        }).join('')}
+                    </div>
+                </div>`).join('');
+
+            $('mobile-groups').innerHTML = `
+                <div class="py-3 flex flex-wrap gap-2">
+                    ${QUICK.slice(0, 5).map(q => `<button onclick="setFilter('${q.t}', '${q.v}')" class="px-3.5 py-2 rounded-full border border-line text-xs font-medium">${q.l}</button>`).join('')}
+                </div>
+                <div class="border-b border-line">
+                    ${QUICK.slice(5).map(q => `<button onclick="setFilter('${q.t}', '${q.v}')" class="w-full text-left px-1 py-3 text-sm font-medium border-t border-line">${q.l}</button>`).join('')}
+                </div>` + groups.map(g => `
+                <details class="group border-b border-line">
+                    <summary class="flex items-center justify-between px-1 py-4 font-semibold cursor-pointer list-none">${g.label}<i data-lucide="chevron-down" class="w-4 h-4 text-muted transition group-open:rotate-180"></i></summary>
+                    <div class="pb-3">
+                        ${g.items.map(it => `<button onclick="setFilter('${it.t}', '${it.v}')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-paper text-left text-sm"><span class="flex-1">${esc(it.l)}</span><span class="text-xs text-muted">${countFor(it.t, it.v)}</span></button>`).join('')}
+                    </div>
+                </details>`).join('');
+
+            // На телефоні показуємо перші 6 підбірок (решта — у меню та в «Оберіть квіти»), щоб нічого не обрізалось
+            $('quick-row').innerHTML = QUICK.map((q, i) => `
+                <button data-key="${q.t}:${q.v}" onclick="setFilter('${q.t}', '${q.v}')" class="quick-pill ${i >= 6 ? 'hidden md:inline-flex' : 'inline-flex'} px-3.5 py-1.5 md:px-4 md:py-2 rounded-full border text-[13px] md:text-sm font-medium transition whitespace-nowrap">${q.l}</button>`).join('');
+
+            const col = (title, items) => `<p class="font-semibold mb-4">${title}</p><div class="space-y-2.5">${items.map(it => `<button onclick="setFilter('${it.t}', '${it.v}')" class="block text-white/60 hover:text-white text-left">${it.l}</button>`).join('')}</div>`;
+            $('footer-col-1').innerHTML = col('Букети', QUICK.slice(5));
+            $('footer-col-2').innerHTML = col('Привід', groups[2].items.slice(0, 5));
+            $('footer-col-3').innerHTML = col('Кому', groups[1].items);
+
+            renderStories();
+            renderOccasionTiles();
+            highlightQuick();
+            refreshIcons();
+        }
+
+        function toggleDD(id) {
+            const panel = $(`dd-${id}`);
+            const willOpen = panel.classList.contains('hidden');
+            closeDD();
+            if (willOpen) { panel.classList.remove('hidden'); $(`dd-btn-${id}`).setAttribute('aria-expanded', 'true'); $(`dd-btn-${id}`).classList.add('bg-paper'); }
+        }
+        function closeDD() {
+            document.querySelectorAll('.dd-panel').forEach(p => p.classList.add('hidden'));
+            document.querySelectorAll('[id^=dd-btn-]').forEach(b => { b.setAttribute('aria-expanded', 'false'); b.classList.remove('bg-paper'); });
+        }
+        document.addEventListener('click', e => { if (!e.target.closest('.nav-dd')) closeDD(); });
+
+        function openMobileMenu() { $('mobile-menu').classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
+        function closeMobileMenu() { $('mobile-menu').classList.add('hidden'); document.body.style.overflow = ''; }
+
+        function highlightQuick() {
+            const key = `${activeFilter.type}:${activeFilter.value}`;
+            document.querySelectorAll('.quick-pill').forEach(b => {
+                const on = b.dataset.key === key;
+                b.classList.toggle('bg-ink', on);
+                b.classList.toggle('text-white', on);
+                b.classList.toggle('border-ink', on);
+                b.classList.toggle('bg-white', !on);
+                b.classList.toggle('border-line', !on);
+                b.classList.toggle('hover:border-ink', !on);
+            });
+        }
+
+        function scrollToCatalog() {
+            $('catalog').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function setFilter(type, value = null, scroll = true) {
+            activeFilter = { type, value };
+            if (type !== 'search') { $('search-input').value = ''; $('search-input-m').value = ''; }
+            else { $('search-input').value = value; $('search-input-m').value = value; }
+            closeDD();
+            closeMobileMenu();
+            switchTab('shop');
+            renderProducts();
+            highlightQuick();
+            if (scroll) scrollToCatalog();
+        }
+
+        function applyMobileSearch() {
+            const q = $('search-input-m').value.trim();
+            if (q.length < 2) { showToast('Введіть щонайменше 2 літери'); return; }
+            setFilter('search', q);
+        }
+
+        let searchTimer;
+        function onSearch(q) {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(() => {
+                q = q.trim();
+                if (q.length >= 2) setFilter('search', q, false);
+                else if (activeFilter.type === 'search') setFilter('all', null, false);
+            }, 200);
+        }
+
+        function storyItems() {
+            return [
+                { t: 'flower', v: 'roses', l: 'Троянди' },
+                { t: 'flower', v: 'tulips', l: 'Тюльпани' },
+                { t: 'flower', v: 'peonies', l: 'Півонії' },
+                { t: 'flower', v: 'hydrangeas', l: 'Гортензії' },
+                { t: 'flower', v: 'sprayRoses', l: 'Кущові троянди' },
+                { t: 'format', v: 'bento', l: 'Бенто' },
+                { t: 'format', v: 'boxes', l: 'У коробці' },
+                { t: 'format', v: 'baskets', l: 'Кошики' },
+                { t: 'diy', v: '1', l: 'Поштучно' }
+            ];
+        }
+
+        function renderStories() {
+            const used = new Set();
+            $('stories-row').innerHTML = storyItems().map(s => {
+                const matches = visibleProducts().filter(x => productMatches(x, { type: s.t, value: s.v }) && x.images.length);
+                const p = matches.find(x => !used.has(x.images[0])) || matches[0];
+                if (p) used.add(p.images[0]);
+                const src = p ? resolveImg(p.images[0]) : '';
+                return `
+                <button onclick="setFilter('${s.t}', '${s.v}')" class="shrink-0 w-20 sm:w-24 flex flex-col items-center gap-2.5 group">
+                    <span class="w-20 h-20 sm:w-24 sm:h-24 rounded-full p-[3px] border border-line group-hover:border-accent transition">
+                        <span class="block w-full h-full rounded-full overflow-hidden bg-blush">${src ? `<img src="${esc(src)}" alt="" loading="lazy" class="w-full h-full object-cover">` : ''}</span>
+                    </span>
+                    <span class="text-sm text-center leading-tight">${s.l}</span>
+                    <span class="text-xs text-muted -mt-1.5">${matches.length} ${pluralItems(matches.length)}</span>
+                </button>`;
+            }).join('');
+        }
+
+        const OCCASION_TILES = [
+            { t: 'occasion', v: 'birthday', l: 'На день народження', img: 'photo-1494337095615-b5f370aad75f' },
+            { t: 'to', v: 'beloved', l: 'Коханій', img: 'photo-1487530811176-3780de880c2d' },
+            { t: 'to', v: 'mom', l: 'Мамі', img: 'photo-1567696153798-9111f9cd3d0d' },
+            { t: 'occasion', v: 'justbecause', l: 'Просто так', img: 'photo-1540635352372-c21b523a29c6' }
+        ];
+
+        function renderOccasionTiles() {
+            $('occasion-tiles').innerHTML = OCCASION_TILES.map(t => {
+                const n = countFor(t.t, t.v);
+                return `
+                <button onclick="setFilter('${t.t}', '${t.v}')" class="group relative overflow-hidden text-left rounded-[20px] aspect-[4/5] sm:aspect-[3/4] bg-blush">
+                    <img src="${unsplash(t.img, 700)}" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-105">
+                    <span class="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent"></span>
+                    <span class="absolute left-4 right-4 bottom-4 sm:left-5 sm:bottom-5 text-white">
+                        <span class="font-display font-semibold text-2xl sm:text-3xl leading-tight block">${t.l}</span>
+                        <span class="text-xs sm:text-sm text-white/80">${n} ${pluralBouquet(n)}</span>
+                    </span>
+                </button>`;
+            }).join('');
+        }
+
+        function applySettings() {
+            $('hero-img').src = resolveImg(settings.heroImage);
+            $('hero-title').textContent = settings.heroTitle;
+            $('hero-subtitle').textContent = settings.heroSubtitle;
+            $('promo-banner').classList.toggle('hidden', !settings.promoEnabled);
+            $('hero-sticker').classList.toggle('hidden', !settings.promoEnabled);
+            $('promo-title').textContent = settings.promoTitle;
+            $('promo-text').textContent = settings.promoText;
+            const contacts = [];
+            if (settings.contactPhone) contacts.push(`<a href="tel:${esc(settings.contactPhone.replace(/[^+\d]/g, ''))}" class="text-white/80 hover:text-white">${esc(settings.contactPhone)}</a>`);
+            if (settings.contactInstagram) contacts.push(`<a href="https://instagram.com/${esc(settings.contactInstagram.replace(/^@/, ''))}" target="_blank" rel="noopener" class="text-white/80 hover:text-white">Instagram: @${esc(settings.contactInstagram.replace(/^@/, ''))}</a>`);
+            if (settings.contactHours) contacts.push(`<span>${esc(settings.contactHours)}</span>`);
+            contacts.push(`<span>© ${new Date().getFullYear()} KVTKA</span>`);
+            $('footer-contacts').innerHTML = contacts.join('');
+            const phrases = String(settings.ticker || '').split(';').map(s => s.trim()).filter(Boolean);
+            $('announce').innerHTML = phrases.map((s, i) => `<span class="${i === 0 ? '' : (i < 3 ? 'hidden md:inline' : 'hidden lg:inline')}">${esc(s)}</span>`).join('');
+        }
+
+        // ================== ВІТРИНА ==================
+        function productCardHtml(p, preview = false) {
+            const out = isOut(p);
+            const click = preview ? '' : `onclick="openProductModal(${p.id})"`;
+            const badgeKey = p.badge || (isHit(p) ? 'hit' : (isSale(p) ? 'sale' : ''));
+            const tags = [];
+            if (BADGES[badgeKey]) tags.push(`<span class="text-[11px] font-semibold px-2.5 py-1 rounded-full ${BADGES[badgeKey].cls}">${BADGES[badgeKey].label}</span>`);
+            if (isPromoEligible(p) && !out) tags.push(`<span class="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-white/90 text-accent">1+1=3</span>`);
+            const outOverlay = out ? `<div class="absolute inset-0 bg-white/55 flex items-center justify-center"><span class="text-xs font-semibold bg-white text-ink px-3 py-1.5 rounded-full shadow-soft">Немає в наявності</span></div>` : '';
+            const priceHtml = p.variants.length
+                ? `<span class="text-muted font-normal text-sm">від </span>${formatPrice(minPrice(p))}`
+                : `${formatPrice(p.price)}${p.unit ? '<span class="text-muted font-normal text-sm"> / шт</span>' : ''}${isSale(p) ? ` <span class="text-sm text-muted font-normal line-through">${formatPrice(p.oldPrice)}</span>` : ''}`;
+            const src = resolveImg(p.images[0]);
+            const imgHtml = src
+                ? `<img src="${esc(src)}" alt="${esc(p.title)}" ${preview ? '' : 'loading="lazy"'} onerror="this.style.visibility='hidden'" class="main w-full h-full object-cover ${out ? 'grayscale' : ''}">`
+                : `<div class="w-full h-full flex items-center justify-center text-muted"><i data-lucide="image" class="w-8 h-8"></i></div>`;
+            const action = preview ? '' : (out
+                ? `onclick="event.stopPropagation(); showToast('Зараз немає в наявності')"`
+                : `onclick="event.stopPropagation(); ${(p.unit || p.variants.length) ? `openProductModal(${p.id})` : `addToCart(${p.id}, -1, 1)`}"`);
+            return `
+                <article class="card bg-white rounded-[20px] p-2 flex flex-col">
+                    <div class="relative rounded-[16px] overflow-hidden aspect-[4/5] bg-blush cursor-pointer" ${click}>
+                        ${imgHtml}
+                        ${tags.length ? `<div class="absolute top-2.5 left-2.5 right-2.5 flex flex-wrap gap-1.5">${tags.join('')}</div>` : ''}
+                        ${outOverlay}
+                    </div>
+                    <div class="px-2 pt-3 pb-2 flex flex-col flex-1">
+                        <p class="text-xs text-muted mb-1">${esc(FORMATS[p.category]?.l || '')}${!out && p.stock !== null && p.stock <= 5 ? ` <span class="text-accent">· залишилось ${p.stock}</span>` : ''}</p>
+                        <h3 class="text-sm sm:text-[15px] leading-snug mb-3 cursor-pointer hover:text-accent line-clamp-2" ${click}>${esc(p.title) || '<span class="text-muted">Назва товару</span>'}</h3>
+                        <div class="flex items-end justify-between gap-2 mt-auto">
+                            <span class="font-semibold text-base sm:text-lg leading-tight">${priceHtml}</span>
+                            <button ${action} class="shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition ${out ? 'bg-paper text-muted' : 'bg-paper hover:bg-ink hover:text-white'}" aria-label="Додати в кошик">
+                                <i data-lucide="${out ? 'ban' : 'plus'}" class="w-[18px] h-[18px]"></i>
+                            </button>
+                        </div>
+                    </div>
+                </article>`;
+        }
+
+        function renderProducts() {
+            const grid = $('products-grid');
+            let list = visibleProducts().filter(p => productMatches(p, activeFilter));
+            const sort = $('sort-select').value;
+            if (sort === 'cheap') list.sort((a, b) => minPrice(a) - minPrice(b));
+            else if (sort === 'expensive') list.sort((a, b) => minPrice(b) - minPrice(a));
+            else if (sort === 'new') list.sort((a, b) => b.id - a.id);
+            else list.sort((a, b) => (shuffleOrder.get(a.id) ?? 0) - (shuffleOrder.get(b.id) ?? 0));
+            list.sort((a, b) => Number(isOut(a)) - Number(isOut(b)));
+
+            $('catalog-title').textContent = filterTitle(activeFilter);
+            $('catalog-count').textContent = `${list.length} ${pluralItems(list.length)}`;
+            const reset = $('catalog-reset');
+            reset.classList.toggle('hidden', activeFilter.type === 'all');
+            reset.classList.toggle('inline-flex', activeFilter.type !== 'all');
+
+            grid.innerHTML = list.length === 0 ? `
+                <div class="col-span-full text-center py-16 bg-white rounded-[20px]">
+                    <p class="font-display font-semibold text-3xl mb-2">Тут поки порожньо</p>
+                    <p class="text-sm text-muted mb-6">Спробуйте інший розділ або подивіться всі букети.</p>
+                    <button onclick="setFilter('all', null, false)" class="px-6 py-3 rounded-full bg-ink text-white font-semibold text-sm hover:bg-accent">Показати всі букети</button>
+                </div>` : list.map(p => productCardHtml(p)).join('');
+            refreshIcons();
+        }
+
+        // ================== КАРТКА ТОВАРУ ==================
+        function openProductModal(id) {
+            const p = getProduct(id);
+            if (!p) return;
+            activeModalProduct = p;
+            modalVariant = p.variants.length ? 0 : -1;
+            modalImgIdx = 0;
+            modalQty = p.unit ? Math.max(1, Math.min(15, available(p))) : 1;
+
+            const chips = [
+                `<span class="text-xs px-2.5 py-1 rounded-full bg-paper">${esc(FORMATS[p.category]?.l || '')}</span>`,
+                ...p.occasions.slice(0, 2).map(k => `<span class="text-xs px-2.5 py-1 rounded-full bg-blush">${OCCASIONS[k].l}</span>`)
+            ];
+            $('m-tags').innerHTML = chips.join('');
+            $('m-title').innerText = p.title;
+            $('m-desc').innerText = p.desc || '';
+            $('m-quick').classList.toggle('hidden', !p.unit);
+            $('m-qty-label').innerText = p.unit ? 'Скільки квітів' : 'Кількість';
+
+            renderModalGallery();
+            renderModalVariants();
+            renderModalQty();
+
+            $('m-add-btn').onclick = () => {
+                if (addToCart(p.id, modalVariant, modalQty, false)) { closeProductModal(); toggleCart(true); }
+            };
+
+            $('product-modal').classList.remove('hidden');
+            $('product-modal').classList.add('flex');
+            document.body.style.overflow = 'hidden';
+            refreshIcons();
+        }
+
+        function renderModalGallery() {
+            const p = activeModalProduct;
+            const img = $('m-img');
+            img.style.visibility = 'visible';
+            img.onerror = () => { img.style.visibility = 'hidden'; };
+            img.src = resolveImg(p.images[modalImgIdx]);
+            img.alt = p.title;
+            const thumbs = $('m-thumbs');
+            thumbs.classList.toggle('hidden', p.images.length < 2);
+            thumbs.innerHTML = p.images.map((s, i) => `
+                <button onclick="modalImgIdx=${i}; renderModalGallery()" class="shrink-0 w-16 h-16 rounded-xl overflow-hidden ring-2 ${i === modalImgIdx ? 'ring-accent' : 'ring-transparent opacity-70 hover:opacity-100'}">
+                    <img src="${esc(resolveImg(s))}" alt="" class="w-full h-full object-cover">
+                </button>`).join('');
+        }
+
+        function renderModalVariants() {
+            const p = activeModalProduct;
+            $('m-variants-wrap').classList.toggle('hidden', !p.variants.length);
+            $('m-variants').innerHTML = p.variants.map((v, i) => `
+                <button onclick="modalVariant=${i}; renderModalVariants(); renderModalQty()" class="px-4 py-2.5 rounded-full text-sm border transition ${i === modalVariant ? 'bg-ink border-ink text-white' : 'bg-white border-line hover:border-ink'}">
+                    ${esc(v.name)} <span class="opacity-60 ml-1">${formatPrice(v.price)}</span>
+                </button>`).join('');
+        }
+
+        function renderModalQty() {
+            const p = activeModalProduct;
+            if (!p) return;
+            const unitPrice = linePrice(p, modalVariant);
+            const avail = available(p);
+            $('m-qty').innerText = modalQty;
+            $('m-price').innerText = formatPrice(unitPrice * modalQty);
+            $('m-oldprice').innerText = (isSale(p) && modalVariant < 0) ? formatPrice(p.oldPrice * modalQty) : '';
+            $('m-price-label').innerText = modalQty > 1 ? `${formatPrice(unitPrice)} × ${modalQty}` : 'Ціна';
+
+            const note = $('m-stock-note');
+            const btn = $('m-add-btn');
+            if (p.stock !== null && avail <= 0) {
+                note.textContent = p.stock === 0 ? 'Немає в наявності' : 'Усі доступні вже в кошику';
+                note.className = 'text-xs font-semibold text-accent';
+                btn.disabled = true;
+                btn.textContent = 'Немає в наявності';
+            } else {
+                note.textContent = p.stock === null ? '' : (p.stock <= 5 ? `Залишилось лише ${p.stock} шт` : `В наявності: ${p.stock} шт`);
+                note.className = 'text-xs font-semibold ' + (p.stock !== null && p.stock <= 5 ? 'text-accent' : 'text-muted');
+                btn.disabled = false;
+                btn.textContent = 'У кошик';
+            }
+            document.querySelectorAll('.m-quick-btn').forEach(b => {
+                const on = Number(b.textContent.replace(/\D/g, '')) === modalQty;
+                b.classList.toggle('bg-ink', on);
+                b.classList.toggle('text-white', on);
+                b.classList.toggle('border-ink', on);
+            });
+        }
+        const modalMax = () => Math.max(1, Math.min(501, available(activeModalProduct)));
+        function changeModalQty(d) { modalQty = Math.min(modalMax(), Math.max(1, modalQty + d)); renderModalQty(); }
+        function setModalQty(n) {
+            const max = modalMax();
+            if (n > max) showToast(`Доступно лише ${max} шт`);
+            modalQty = Math.min(max, n);
+            renderModalQty();
+        }
+
+        function closeProductModal() {
+            if ($('product-modal').classList.contains('hidden')) return;
+            $('product-modal').classList.add('hidden');
+            $('product-modal').classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+
+        // ================== КОШИК ==================
+        function addToCart(id, v = -1, qty = 1, toast = true) {
+            const p = getProduct(id);
+            if (!p || p.hidden) return false;
+            if (p.variants.length && (v < 0 || !p.variants[v])) v = 0;
+            if (!p.variants.length) v = -1;
+            const avail = available(p);
+            if (avail <= 0) { showToast('Цього товару більше немає в наявності'); return false; }
+            if (qty > avail) { qty = avail; showToast(`Додано лише ${avail} шт — більше немає в наявності`); toast = false; }
+
+            lastOrder = null;
+            const key = `${id}|${v}`;
+            const line = cart.find(i => i.key === key);
+            if (line) line.qty += qty;
+            else cart.push({ key, id, v, qty });
+            saveCart();
+            updateCartUI();
+            const badge = $('cart-count');
+            badge.classList.remove('bump'); void badge.offsetWidth; badge.classList.add('bump');
+            if (toast) showToast(`Додано в кошик: ${p.title}`);
+            return true;
+        }
+
+        function changeCartQty(key, d) {
+            const line = cart.find(i => i.key === key);
+            if (!line) return;
+            if (d > 0) {
+                const p = getProduct(line.id);
+                if (p && available(p) <= 0) { showToast('Більше немає в наявності'); return; }
+            }
+            line.qty += d;
+            if (line.qty <= 0) cart = cart.filter(i => i.key !== key);
+            saveCart();
+            updateCartUI();
+        }
+
+        function removeFromCart(key) {
+            cart = cart.filter(i => i.key !== key);
+            saveCart();
+            updateCartUI();
+        }
+
+        // Акція 1+1=3: з кожних трьох букетів найдешевший — безкоштовно
+        function calcTotals() {
+            const lines = cart.map(i => {
+                const product = getProduct(i.id);
+                if (!product) return null;
+                const variant = (i.v >= 0 && product.variants[i.v]) ? product.variants[i.v] : null;
+                return { ...i, product, variant, price: linePrice(product, i.v), name: product.title + (variant ? ` — ${variant.name}` : '') };
+            }).filter(Boolean);
+            const subtotal = lines.reduce((s, l) => s + l.price * l.qty, 0);
+            const units = [];
+            lines.forEach(l => { if (isPromoEligible(l.product)) for (let k = 0; k < l.qty; k++) units.push(l.price); });
+            units.sort((a, b) => b - a);
+            let discount = 0;
+            for (let i = 2; i < units.length; i += 3) discount += units[i];
+            const itemCount = lines.reduce((s, l) => s + (l.product.unit ? 1 : l.qty), 0);
+            return { lines, subtotal, discount, total: subtotal - discount, eligibleCount: units.length, itemCount };
+        }
+
+        function updateCartUI() {
+            cart = cart.filter(i => { const p = getProduct(i.id); return p && !p.hidden; });
+            const { lines, subtotal, discount, total, eligibleCount, itemCount } = calcTotals();
+            $('cart-count').innerText = itemCount;
+
+            if (lastOrder && lines.length === 0) {
+                $('cart-items').innerHTML = `
+                <div class="text-center py-12">
+                    <div class="w-14 h-14 mx-auto mb-4 rounded-full bg-sage flex items-center justify-center"><i data-lucide="check" class="w-7 h-7"></i></div>
+                    <p class="font-display font-semibold text-3xl mb-2">Дякуємо за замовлення!</p>
+                    <p class="text-sm text-muted mb-1">Номер замовлення: <b class="text-ink">№${lastOrder.number}</b></p>
+                    <p class="text-sm text-muted mb-6">Ми зателефонуємо на ${esc(lastOrder.customer.phone)}, щоб підтвердити деталі.</p>
+                    <button onclick="lastOrder=null; toggleCart(false); updateCartUI()" class="px-6 py-3 rounded-full bg-ink text-white font-semibold text-sm hover:bg-accent">Повернутися до букетів</button>
+                </div>`;
+                $('promo-hint').innerHTML = '';
+                $('checkout-form').classList.add('hidden');
+                $('cart-footer').classList.add('hidden');
+                $('order-error').classList.add('hidden');
+                refreshIcons();
+                return;
+            }
+            $('cart-footer').classList.toggle('hidden', lines.length === 0);
+            $('order-error').classList.add('hidden');
+            $('cart-items').innerHTML = lines.length === 0 ? `
+                <div class="text-center py-14">
+                    <p class="font-display font-semibold text-3xl mb-2">Кошик порожній</p>
+                    <p class="text-sm text-muted mb-6">Оберіть букет — ми зберемо і привеземо його.</p>
+                    <button onclick="toggleCart(false); setFilter('all')" class="px-6 py-3 rounded-full bg-ink text-white font-semibold text-sm hover:bg-accent">Перейти до букетів</button>
+                </div>` : lines.map(l => `
+                <div class="flex items-center gap-3 pb-4 border-b border-line">
+                    <img src="${esc(resolveImg(l.product.images[0]))}" alt="" class="w-16 h-20 rounded-xl object-cover bg-blush shrink-0">
+                    <div class="flex-1 min-w-0">
+                        <h4 class="text-sm leading-snug line-clamp-2">${esc(l.name)}</h4>
+                        <p class="text-sm font-semibold mt-1">${formatPrice(l.price * l.qty)}${l.qty > 1 ? `<span class="text-muted font-normal text-xs"> · ${formatPrice(l.price)} × ${l.qty}</span>` : ''}</p>
+                        <div class="flex items-center gap-3 mt-2">
+                            <div class="flex items-center border border-line rounded-full">
+                                <button onclick="changeCartQty('${l.key}', -1)" class="w-7 h-7 flex items-center justify-center" aria-label="Менше"><i data-lucide="minus" class="w-3 h-3"></i></button>
+                                <span class="w-6 text-center text-xs font-semibold">${l.qty}</span>
+                                <button onclick="changeCartQty('${l.key}', 1)" class="w-7 h-7 flex items-center justify-center" aria-label="Більше"><i data-lucide="plus" class="w-3 h-3"></i></button>
+                            </div>
+                            <button onclick="removeFromCart('${l.key}')" class="text-xs text-muted hover:text-accent">Видалити</button>
+                        </div>
+                    </div>
+                </div>`).join('');
+
+            const rem = eligibleCount % 3;
+            $('promo-hint').innerHTML = (eligibleCount > 0 && rem !== 0) ? `
+                <div class="mb-5 p-4 rounded-2xl bg-blush text-sm leading-relaxed">
+                    Додайте ще <b>${3 - rem} ${pluralBouquet(3 - rem)}</b> — і найдешевший з трьох буде в подарунок.
+                </div>` : '';
+
+            $('cart-subtotal').innerText = formatPrice(subtotal);
+            $('cart-discount-row').classList.toggle('hidden', discount === 0);
+            $('cart-discount-row').classList.toggle('flex', discount > 0);
+            $('cart-discount').innerText = `−${formatPrice(discount)}`;
+            $('cart-total').innerText = formatPrice(total);
+            $('checkout-btn').disabled = lines.length === 0;
+            $('checkout-form').classList.toggle('hidden', lines.length === 0);
+            refreshIcons();
+        }
+
+        function toggleCart(show) {
+            const drawer = $('cart-drawer');
+            const open = show === undefined ? drawer.classList.contains('hidden') : show;
+            drawer.classList.toggle('hidden', !open);
+            drawer.classList.toggle('flex', open);
+            document.body.style.overflow = open ? 'hidden' : '';
+            if (open) updateTimeSlots();
+        }
+
+        // ================== ОФОРМЛЕННЯ ==================
+        function todayISO() {
+            const d = new Date();
+            return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+        }
+
+        function markInvalid(id, bad) { $(id).style.borderColor = bad ? '#FF4FA3' : ''; }
+
+        function orderText(order) {
+            const itemsText = order.items.map(i => `• ${i.title} × ${i.qty} = ${formatPrice(i.price * i.qty)}`).join('\n');
+            return [
+                `🌸 Нове замовлення №${order.number}`, ``,
+                `👤 ${order.customer.name}, ${order.customer.phone}`,
+                `📍 ${order.delivery.address}`,
+                `🗓 ${order.delivery.date || 'дата не вказана'}, ${order.delivery.time}`,
+                order.delivery.recipient ? `🎁 Отримувач: ${order.delivery.recipient}` : '',
+                order.delivery.anonymous ? `🤫 Анонімна доставка` : '', ``,
+                itemsText, ``,
+                order.discount ? `Акція 1+1=3: −${formatPrice(order.discount)}` : '',
+                `💰 Разом: ${formatPrice(order.total)}`,
+                order.cardText ? `\n✉️ Листівка: ${order.cardText}` : '',
+                order.comment ? `💬 Коментар: ${order.comment}` : ''
+            ].filter(line => line !== '').join('\n');
+        }
+
+        // Відправка замовлення власнику магазину
+        async function sendOrder(order) {
+            // 1) Основний спосіб: сервер на Netlify (перевіряє ціни, списує залишки, надсилає в Telegram)
+            if (isHosted()) {
+                try {
+                    const res = await fetch('/api/order', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(order)
+                    });
+                    const data = await res.json().catch(() => ({}));
+                    if (res.ok && data.ok) return { ok: true, ...data };
+                    if (res.status !== 404) return { ok: false, error: data.error };
+                } catch (e) { return { ok: false }; }
+            }
+            // 2) Запасний спосіб: прямо в Telegram, якщо токен вписано в TELEGRAM угорі коду
+            if (!TELEGRAM.botToken || !TELEGRAM.chatId) return { ok: false };
+            try {
+                const res = await fetch(`https://api.telegram.org/bot${TELEGRAM.botToken}/sendMessage`, {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: TELEGRAM.chatId, text: orderText(order) })
+                });
+                return { ok: res.ok };
+            } catch (e) { return { ok: false }; }
+        }
+
+        async function checkout() {
+            const v = id => $(id).value.trim();
+            const name = v('order-name'), phone = v('order-phone'), address = v('order-address'), date = v('order-date');
+            const phoneOk = phone.replace(/\D/g, '').length >= 10;
+            const dateOk = !date || date >= todayISO();
+            markInvalid('order-name', !name);
+            markInvalid('order-phone', !phoneOk);
+            markInvalid('order-address', !address);
+            markInvalid('order-date', !dateOk);
+
+            const { lines, subtotal, discount, total } = calcTotals();
+            if (lines.length === 0) return;
+            if (!name || !address) { showToast('Вкажіть ім\'я та адресу доставки'); return; }
+            if (!phoneOk) { showToast('Перевірте номер телефону — потрібно щонайменше 10 цифр'); return; }
+            if (!dateOk) { showToast('Дата доставки не може бути в минулому'); return; }
+            if ($('order-time').selectedOptions[0]?.disabled) { showToast('Цей час доставки на сьогодні вже минув — оберіть інший'); return; }
+
+            const order = {
+                id: Date.now(),
+                number: String(Date.now()).slice(-6),
+                date: new Date().toLocaleString('uk-UA'),
+                status: 'new',
+                customer: { name, phone },
+                delivery: { address, date, time: v('order-time'), recipient: v('order-recipient'), anonymous: $('order-anonymous').checked },
+                cardText: v('order-card-text'),
+                comment: v('order-comment'),
+                items: lines.map(l => ({ id: l.product.id, v: l.v, title: l.name, price: l.price, qty: l.qty })),
+                subtotal, discount, total
+            };
+
+            const btn = $('checkout-btn');
+            btn.disabled = true;
+            btn.innerText = 'Надсилаємо…';
+
+            const result = await sendOrder(order);
+            order.sent = result.ok;
+            // На опублікованому сайті не кажемо «прийнято», якщо замовлення не дійшло до магазину
+            const mustDeliver = isHosted() || !!TELEGRAM.botToken;
+            if (!result.ok && mustDeliver) {
+                btn.disabled = false;
+                btn.innerText = 'Оформити замовлення';
+                const phoneHint = settings.contactPhone ? ` Або зателефонуйте нам: ${settings.contactPhone}.` : '';
+                showOrderError((result.error || 'Не вдалося надіслати замовлення. Перевірте інтернет і спробуйте ще раз.') + phoneHint);
+                return;
+            }
+            if (result.number) order.number = result.number;
+            if (typeof result.total === 'number') { order.total = result.total; order.discount = result.discount; }
+
+            lines.forEach(l => { if (l.product.stock !== null) l.product.stock = Math.max(0, l.product.stock - l.qty); });
+            if (!isHosted()) {
+                saveProducts();
+                orders.unshift(order);
+                saveOrders();
+            }
+
+            cart = [];
+            saveCart();
+            ['order-name', 'order-phone', 'order-address', 'order-recipient', 'order-card-text', 'order-comment'].forEach(id => $(id).value = '');
+            $('order-anonymous').checked = false;
+            $('order-date').value = todayISO();
+            updateTimeSlots();
+            btn.innerText = 'Оформити замовлення';
+            lastOrder = order;
+            updateCartUI();
+            renderProducts();
+            updateOrdersBadge();
+        }
+
+        let lastOrder = null;
+        function showOrderError(msg) {
+            $('order-error').textContent = msg;
+            $('order-error').classList.remove('hidden');
+        }
+
+        // Для сьогоднішньої дати ховаємо інтервали, які вже минули
+        function updateTimeSlots() {
+            const sel = $('order-time');
+            const isToday = $('order-date').value === todayISO();
+            const hour = new Date().getHours();
+            [...sel.options].forEach(o => {
+                const m = o.value.match(/–(\d{2}):/);
+                const past = isToday && m && Number(m[1]) <= hour + 1;
+                o.disabled = !!past;
+                o.textContent = o.value + (past ? ' (вже минув)' : '');
+            });
+            if (sel.selectedOptions[0]?.disabled) sel.selectedIndex = 0;
+        }
+
+        // ================== АДМІНКА: ЗАГАЛЬНЕ ==================
+        function switchTab(tab) {
+            const shop = tab === 'shop';
+            $('home-sections').classList.toggle('hidden', !shop);
+            $('catalog').classList.toggle('hidden', !shop);
+            $('site-footer').classList.toggle('hidden', !shop);
+            $('admin-tab').classList.toggle('hidden', shop);
+        }
+
+        function switchAdminTab(tab) {
+            currentAdminTab = tab;
+            document.querySelectorAll('.admin-panel').forEach(el => el.classList.toggle('hidden', el.id !== `admin-panel-${tab}`));
+            document.querySelectorAll('.admin-tab-btn').forEach(b => {
+                const on = b.dataset.adminTab === tab;
+                b.classList.toggle('bg-rose-500', on);
+                b.classList.toggle('text-white', on);
+                b.classList.toggle('bg-zinc-800', !on);
+                b.classList.toggle('text-zinc-300', !on);
+            });
+            if (tab === 'overview') renderOverview();
+            if (tab === 'products') renderAdminProducts();
+            if (tab === 'orders') { renderOrders(); if (ordersSource === 'server') loadServerOrders().then(ok => { if (ok && currentAdminTab === 'orders') renderOrders(); }); }
+            if (tab === 'settings') renderSettings();
+            refreshIcons();
+        }
+
+        function openAdminModal() {
+            if (isAdmin) { switchTab('admin'); switchAdminTab(currentAdminTab); window.scrollTo({ top: 0 }); return; }
+            $('admin-password').value = '';
+            $('admin-modal').classList.remove('hidden');
+            $('admin-modal').classList.add('flex');
+            setTimeout(() => $('admin-password').focus(), 50);
+        }
+
+        function closeAdminModal() {
+            $('admin-modal').classList.add('hidden');
+            $('admin-modal').classList.remove('flex');
+        }
+
+        async function checkAdminPassword(pwd) {
+            if (isHosted()) {
+                try {
+                    const res = await fetch('/api/auth', { method: 'POST', headers: { 'x-admin-key': pwd } });
+                    if (res.status === 200) return 'ok';
+                    if (res.status === 401) return 'bad';
+                    if (res.status === 503) showToast('На сервері не задано ADMIN_KEY — див. інструкцію');
+                } catch (e) {}
+            }
+            // Сайт відкритий як файл або сервер ще не налаштовано — локальний пароль з коду
+            return pwd === ADMIN_PASSWORD ? 'local' : 'bad';
+        }
+
+        async function loginAdmin() {
+            const pwd = $('admin-password').value;
+            const check = await checkAdminPassword(pwd);
+            if (check !== 'bad') {
+                if (check === 'ok') {
+                    adminKey = pwd;
+                    try { sessionStorage.setItem('kv_admin_key', pwd); } catch (e) {}
+                    await loadServerOrders();
+                }
+                isAdmin = true;
+                closeAdminModal();
+                $('admin-btn-text').innerText = 'Панель';
+                $('admin-header-btn').classList.remove('hidden');
+                $('admin-header-btn').classList.add('flex');
+                if (location.hash === '#admin') history.replaceState(null, '', location.pathname + location.search);
+                switchTab('admin');
+                switchAdminTab('overview');
+                window.scrollTo({ top: 0 });
+            } else {
+                showToast('Невірний пароль');
+            }
+        }
+
+        function logoutAdmin() {
+            isAdmin = false;
+            adminKey = '';
+            try { sessionStorage.removeItem('kv_admin_key'); } catch (e) {}
+            $('admin-btn-text').innerText = 'Адмінка';
+            $('admin-header-btn').classList.add('hidden');
+            $('admin-header-btn').classList.remove('flex');
+            setFilter('all', null, false);
+            window.scrollTo({ top: 0 });
+        }
+
+        function refreshAll() {
+            buildNav();
+            renderProducts();
+            updateCartUI();
+            if (isAdmin && !$('admin-tab').classList.contains('hidden')) switchAdminTab(currentAdminTab);
+        }
+
+        // ================== АДМІНКА: ОГЛЯД ==================
+        function stockChip(p) {
+            if (p.stock === null) return `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-zinc-700/60 text-zinc-300">Під замовлення</span>`;
+            if (p.stock === 0) return `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300">Немає</span>`;
+            if (p.stock <= 3) return `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300">Залишилось ${p.stock}</span>`;
+            return `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300">${p.stock} шт</span>`;
+        }
+
+        function renderOverview() {
+            const visible = visibleProducts().length;
+            const newOrders = orders.filter(o => (o.status || 'new') === 'new').length;
+            const revenue = orders.filter(o => o.status !== 'cancelled').reduce((s, o) => s + (o.total || 0), 0);
+            const low = products.filter(p => p.stock !== null && p.stock <= 3).sort((a, b) => a.stock - b.stock);
+            const untagged = products.filter(p => isFlowerFormat(p) && !p.to.length && !p.occasions.length).length;
+
+            const tile = (icon, label, value, sub, color) => `
+                <div class="bg-zinc-900/80 border border-zinc-800 rounded-3xl p-6">
+                    <div class="w-10 h-10 rounded-2xl ${color} flex items-center justify-center mb-4"><i data-lucide="${icon}" class="w-5 h-5"></i></div>
+                    <p class="text-xs text-zinc-400 font-semibold">${label}</p>
+                    <p class="text-2xl font-extrabold text-white mt-1">${value}</p>
+                    <p class="text-[11px] text-zinc-500 mt-1">${sub}</p>
+                </div>`;
+
+            $('admin-panel-overview').innerHTML = publishStatusHtml() + `
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    ${tile('flower-2', 'Товарів на вітрині', visible, `з ${products.length} у каталозі`, 'bg-rose-500/15 text-rose-400')}
+                    ${tile('bell', 'Нових замовлень', newOrders, 'очікують підтвердження', 'bg-amber-500/15 text-amber-300')}
+                    ${tile('inbox', 'Усього замовлень', orders.length, ordersSource === 'server' ? 'з сайту' : 'в цьому браузері', 'bg-sky-500/15 text-sky-300')}
+                    ${tile('wallet', 'Сума замовлень', formatPrice(revenue), 'без скасованих', 'bg-emerald-500/15 text-emerald-300')}
+                </div>
+                ${untagged ? `
+                <button onclick="$('admin-status-filter').value='untagged'; switchAdminTab('products')" class="w-full text-left flex items-center gap-3 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-200 text-sm">
+                    <i data-lucide="tag" class="w-5 h-5 shrink-0"></i>
+                    <span class="flex-1">${untagged} ${pluralItems(untagged)} без розділів «Кому» і «Привід» — покупці не знайдуть їх через меню.</span>
+                    <span class="font-bold">Показати</span>
+                </button>` : ''}
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-zinc-900/80 border border-zinc-800 rounded-3xl p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-bold text-white flex items-center gap-2"><i data-lucide="package" class="w-4 h-4 text-amber-300"></i> Закінчуються</h3>
+                            <button onclick="$('admin-status-filter').value='low'; switchAdminTab('products')" class="text-xs text-rose-400 font-bold hover:underline">Усі</button>
+                        </div>
+                        ${low.length ? low.slice(0, 6).map(p => `
+                            <div class="flex items-center gap-3 py-2.5 border-b border-zinc-800 last:border-0">
+                                <img src="${esc(resolveImg(p.images[0]))}" alt="" class="w-10 h-10 rounded-xl object-cover bg-zinc-800 shrink-0">
+                                <span class="text-sm text-zinc-200 flex-1 min-w-0 truncate">${esc(p.title)}</span>
+                                ${stockChip(p)}
+                                <button onclick="openEditor(${p.id})" class="text-xs font-bold text-zinc-300 bg-zinc-800 hover:bg-zinc-700 px-3 py-1.5 rounded-xl shrink-0">Поповнити</button>
+                            </div>`).join('') : `<p class="text-sm text-zinc-500 py-6 text-center">Усе в достатній кількості. Щоб рахувати залишки, увімкніть «Рахувати залишок» у товарі.</p>`}
+                    </div>
+                    <div class="bg-zinc-900/80 border border-zinc-800 rounded-3xl p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-bold text-white flex items-center gap-2"><i data-lucide="inbox" class="w-4 h-4 text-sky-300"></i> Останні замовлення</h3>
+                            <button onclick="switchAdminTab('orders')" class="text-xs text-rose-400 font-bold hover:underline">Усі</button>
+                        </div>
+                        ${orders.length ? orders.slice(0, 5).map(o => {
+                            const st = ORDER_STATUSES[o.status || 'new'] || ORDER_STATUSES.new;
+                            return `
+                            <div class="flex items-center gap-3 py-2.5 border-b border-zinc-800 last:border-0 text-sm">
+                                <span class="font-bold text-white">№${esc(o.number || String(o.id).slice(-6))}</span>
+                                <span class="text-zinc-400 flex-1 min-w-0 truncate">${esc(o.customer?.name)}</span>
+                                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full border ${st.cls}">${st.label}</span>
+                                <span class="font-bold text-rose-400 whitespace-nowrap">${formatPrice(o.total || 0)}</span>
+                            </div>`;
+                        }).join('') : `<p class="text-sm text-zinc-500 py-6 text-center">Замовлень поки немає.</p>`}
+                    </div>
+                </div>
+                <button onclick="openEditor()" class="w-full flex items-center justify-center gap-2 py-5 border-2 border-dashed border-zinc-700 hover:border-rose-500 hover:text-rose-400 text-zinc-400 rounded-3xl font-bold text-sm transition">
+                    <i data-lucide="plus" class="w-5 h-5"></i> Додати новий товар
+                </button>`;
+            refreshIcons();
+        }
+
+        // ================== АДМІНКА: ТОВАРИ ==================
+        function fillSelects() {
+            const fmtOptions = Object.entries(FORMATS).map(([k, v]) => `<option value="${k}">${v.l}</option>`).join('');
+            $('admin-cat-filter').innerHTML = `<option value="all">Усі типи</option>` + fmtOptions;
+            $('ed-category').innerHTML = fmtOptions;
+            $('ed-gift').innerHTML = `<option value="">Не вказано</option>` + Object.entries(GIFT_TYPES).map(([k, v]) => `<option value="${k}">${v.l}</option>`).join('');
+        }
+
+        function renderAdminProducts() {
+            const q = $('admin-search').value.trim().toLowerCase();
+            const cat = $('admin-cat-filter').value;
+            const status = $('admin-status-filter').value;
+            const list = products.filter(p => {
+                if (q && !p.title.toLowerCase().includes(q)) return false;
+                if (cat !== 'all' && p.category !== cat) return false;
+                if (status === 'visible' && p.hidden) return false;
+                if (status === 'hidden' && !p.hidden) return false;
+                if (status === 'low' && !(p.stock !== null && p.stock <= 3)) return false;
+                if (status === 'out' && p.stock !== 0) return false;
+                if (status === 'untagged' && !(isFlowerFormat(p) && !p.to.length && !p.occasions.length)) return false;
+                return true;
+            });
+            $('admin-count').innerText = `Показано ${list.length} з ${products.length}`;
+
+            $('admin-products-list').innerHTML = list.map(p => {
+                const src = resolveImg(p.images[0]);
+                const priceText = p.variants.length ? `від ${formatPrice(minPrice(p))}` : `${formatPrice(p.price)}${p.unit ? ' / шт' : ''}`;
+                const tagLine = [...p.to.map(k => RECIPIENTS[k].l), ...p.occasions.map(k => OCCASIONS[k].l)].slice(0, 4).join(', ');
+                return `
+                <div class="bg-zinc-900/80 border ${p.hidden ? 'border-dashed border-zinc-700' : 'border-zinc-800'} rounded-3xl overflow-hidden flex flex-col">
+                    <div class="relative h-40 bg-zinc-800 cursor-pointer ${p.hidden ? 'opacity-50' : ''}" onclick="openEditor(${p.id})">
+                        ${src ? `<img src="${esc(src)}" alt="" loading="lazy" class="w-full h-full object-cover">` : `<div class="w-full h-full flex items-center justify-center text-zinc-600"><i data-lucide="image" class="w-8 h-8"></i></div>`}
+                        <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+                            ${p.hidden ? `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-zinc-900/90 text-zinc-300 flex items-center gap-1"><i data-lucide="eye-off" class="w-3 h-3"></i> Приховано</span>` : ''}
+                            ${p.collections.map(c => `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-black/70 text-white">${COLLECTIONS[c].e} ${COLLECTIONS[c].l}</span>`).join('')}
+                        </div>
+                        ${p.images.length > 1 ? `<span class="absolute bottom-3 right-3 text-[10px] font-bold px-2 py-0.5 rounded-full bg-black/70 text-white flex items-center gap-1"><i data-lucide="images" class="w-3 h-3"></i> ${p.images.length}</span>` : ''}
+                    </div>
+                    <div class="p-4 flex flex-col flex-1">
+                        <p class="text-[11px] font-bold text-zinc-500 mb-1">${esc(FORMATS[p.category].l)}</p>
+                        <h4 class="text-sm font-bold text-white line-clamp-2 mb-2">${esc(p.title)}</h4>
+                        <div class="flex items-center gap-2 flex-wrap mb-2">
+                            <span class="text-sm font-extrabold text-rose-400">${priceText}</span>
+                            ${p.variants.length ? `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-sky-500/15 text-sky-300">${p.variants.length} варіант(и)</span>` : ''}
+                            ${stockChip(p)}
+                        </div>
+                        <p class="text-[11px] text-zinc-500 mb-4 line-clamp-1">${tagLine ? esc(tagLine) : (isFlowerFormat(p) ? '<span class="text-amber-300">Не вказано «Кому» і «Привід»</span>' : '')}</p>
+                        <div class="flex items-center gap-1.5 mt-auto">
+                            <button onclick="openEditor(${p.id})" class="flex-1 flex items-center justify-center gap-1.5 text-xs font-bold bg-zinc-800 hover:bg-zinc-700 text-zinc-100 py-2 rounded-xl transition"><i data-lucide="pencil" class="w-3.5 h-3.5"></i> Редагувати</button>
+                            <button onclick="duplicateProduct(${p.id})" title="Дублювати" class="icon-btn bg-zinc-800 hover:bg-zinc-700 text-zinc-300"><i data-lucide="copy" class="w-4 h-4"></i></button>
+                            <button onclick="toggleHidden(${p.id})" title="${p.hidden ? 'Показати на сайті' : 'Сховати з сайту'}" class="icon-btn bg-zinc-800 hover:bg-zinc-700 text-zinc-300"><i data-lucide="${p.hidden ? 'eye' : 'eye-off'}" class="w-4 h-4"></i></button>
+                            <button onclick="deleteProduct(${p.id})" title="Видалити" class="icon-btn bg-rose-500/10 hover:bg-rose-500/25 text-rose-400"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                        </div>
+                    </div>
+                </div>`;
+            }).join('') || `<p class="col-span-full text-sm text-zinc-500 py-10 text-center">Нічого не знайдено.</p>`;
+            refreshIcons();
+        }
+
+        function toggleHidden(id) {
+            const p = getProduct(id);
+            if (!p) return;
+            p.hidden = !p.hidden;
+            saveProducts();
+            markDirty();
+            showToast(p.hidden ? 'Товар приховано з сайту' : 'Товар знову на вітрині');
+            refreshAll();
+        }
+
+        function duplicateProduct(id) {
+            const p = getProduct(id);
+            if (p) openEditor(null, p);
+        }
+
+        async function deleteProduct(id) {
+            const p = getProduct(id);
+            if (!p || !confirm(`Видалити «${p.title}»? Це не можна скасувати.`)) return;
+            products = products.filter(x => x.id !== id);
+            cart = cart.filter(i => i.id !== id);
+            saveProducts();
+            markDirty();
+            saveCart();
+            await gcImages();
+            showToast('Товар видалено');
+            refreshAll();
+        }
+
+        // ================== АДМІНКА: РЕДАКТОР ТОВАРУ ==================
+        function openEditor(id = null, cloneFrom = null) {
+            const src = id ? getProduct(id) : cloneFrom;
+            editorDraft = src
+                ? { ...JSON.parse(JSON.stringify(src)), id: id || null }
+                : { id: null, title: '', category: 'bouquets', desc: '', badge: '', price: '', oldPrice: '', unit: false, images: [], variants: [], stock: null, hidden: false, flowers: [], to: [], occasions: [], collections: [], giftType: '' };
+            if (cloneFrom) { editorDraft.title += ' (копія)'; editorDraft.hidden = true; }
+            editorDraft.stockMode = editorDraft.stock === null || editorDraft.stock === undefined ? 'unlimited' : 'limited';
+
+            $('ed-heading').textContent = id ? 'Редагування товару' : (cloneFrom ? 'Копія товару' : 'Новий товар');
+            $('ed-title').value = editorDraft.title;
+            $('ed-category').value = editorDraft.category;
+            $('ed-badge').value = editorDraft.badge || '';
+            $('ed-gift').value = editorDraft.giftType || '';
+            $('ed-desc').value = editorDraft.desc;
+            $('ed-price').value = editorDraft.price || '';
+            $('ed-oldprice').value = editorDraft.oldPrice || '';
+            $('ed-unit').checked = !!editorDraft.unit;
+            document.querySelector(`input[name=ed-stock-mode][value=${editorDraft.stockMode}]`).checked = true;
+            $('ed-stock').value = editorDraft.stock ?? '';
+            $('ed-visible').checked = !editorDraft.hidden;
+            $('ed-photo-url').value = '';
+            $('ed-error').textContent = '';
+            $('ed-photo-status').textContent = '';
+
+            renderEditorPhotos();
+            renderEditorVariants();
+            renderEditorTags();
+            onEditorInput();
+
+            $('editor-modal').classList.remove('hidden');
+            $('editor-modal').classList.add('flex');
+            document.body.style.overflow = 'hidden';
+            $('ed-scroll').scrollTop = 0;
+            refreshIcons();
+        }
+
+        async function closeEditor(cancelled = false) {
+            if (cancelled && editorDraft && !confirm('Закрити без збереження?')) return;
+            editorDraft = null;
+            $('editor-modal').classList.add('hidden');
+            $('editor-modal').classList.remove('flex');
+            document.body.style.overflow = '';
+            await gcImages();
+        }
+
+        function syncDraftFromFields() {
+            const d = editorDraft;
+            if (!d) return;
+            d.title = $('ed-title').value;
+            d.category = $('ed-category').value;
+            d.badge = $('ed-badge').value;
+            d.giftType = $('ed-gift').value;
+            d.desc = $('ed-desc').value;
+            d.price = $('ed-price').value;
+            d.oldPrice = $('ed-oldprice').value;
+            d.unit = $('ed-unit').checked;
+            d.stockMode = document.querySelector('input[name=ed-stock-mode]:checked').value;
+            d.stock = $('ed-stock').value;
+            d.hidden = !$('ed-visible').checked;
+            $('ed-stock').disabled = d.stockMode !== 'limited';
+            const hasVariants = d.variants.length > 0;
+            $('ed-price-hint').classList.toggle('hidden', !hasVariants);
+            $('ed-price').disabled = hasVariants;
+            $('ed-oldprice').disabled = hasVariants;
+            $('ed-gift-wrap').classList.toggle('hidden', d.category !== 'gifts');
+        }
+
+        function draftToProduct(d) {
+            const variants = d.variants.filter(v => String(v.name).trim());
+            const price = variants.length ? Math.min(...variants.map(v => Number(v.price) || 0)) : Number(d.price) || 0;
+            return normalizeProduct({
+                ...d,
+                variants,
+                price,
+                oldPrice: variants.length ? null : (Number(d.oldPrice) > 0 ? Number(d.oldPrice) : null),
+                stock: d.stockMode === 'limited' ? (d.stock === '' ? 0 : d.stock) : null
+            });
+        }
+
+        function onEditorInput() {
+            if (!editorDraft) return;
+            syncDraftFromFields();
+            $('ed-preview').innerHTML = productCardHtml({ ...draftToProduct(editorDraft), id: 0 }, true);
+            refreshIcons();
+        }
+
+        function renderEditorTags() {
+            const group = (key, dict) => Object.entries(dict).map(([k, v]) => {
+                const on = editorDraft[key].includes(k);
+                return `<button type="button" onclick="toggleDraftTag('${key}', '${k}')" class="px-3 py-1.5 rounded-full text-xs font-bold border transition ${on ? 'bg-rose-500 border-rose-500 text-white' : 'bg-zinc-800 border-zinc-700 text-zinc-300 hover:border-zinc-500'}">${v.e} ${v.l}</button>`;
+            }).join('');
+            $('ed-tags-flowers').innerHTML = group('flowers', FLOWERS);
+            $('ed-tags-to').innerHTML = group('to', RECIPIENTS);
+            $('ed-tags-occasions').innerHTML = group('occasions', OCCASIONS);
+            $('ed-tags-collections').innerHTML = group('collections', COLLECTIONS);
+        }
+
+        function toggleDraftTag(key, k) {
+            const a = editorDraft[key];
+            const i = a.indexOf(k);
+            if (i >= 0) a.splice(i, 1); else a.push(k);
+            renderEditorTags();
+            onEditorInput();
+        }
+
+        function renderEditorPhotos() {
+            const imgs = editorDraft.images;
+            const ctrl = (fn, icon, title, extra = '') => `<button type="button" onclick="${fn}" title="${title}" class="w-7 h-7 rounded-lg bg-black/60 hover:bg-black/90 text-white flex items-center justify-center ${extra}"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i></button>`;
+            $('ed-photos').innerHTML = imgs.map((src, i) => `
+                <div class="relative group aspect-square rounded-2xl overflow-hidden border-2 ${i === 0 ? 'border-rose-500' : 'border-zinc-700'} bg-zinc-800">
+                    <img src="${esc(resolveImg(src))}" alt="" class="w-full h-full object-cover" onerror="this.style.opacity=0.15">
+                    ${i === 0 ? '<span class="absolute top-1.5 left-1.5 text-[9px] font-extrabold bg-rose-500 text-white px-2 py-0.5 rounded-full">Головне</span>' : ''}
+                    <div class="absolute inset-x-0 bottom-0 p-1.5 flex justify-center gap-1 bg-gradient-to-t from-black/80 to-transparent md:opacity-0 md:group-hover:opacity-100 transition">
+                        ${i > 0 ? ctrl(`setMainPhoto(${i})`, 'star', 'Зробити головним') : ''}
+                        ${i > 0 ? ctrl(`movePhoto(${i}, -1)`, 'chevron-left', 'Вліво') : ''}
+                        ${i < imgs.length - 1 ? ctrl(`movePhoto(${i}, 1)`, 'chevron-right', 'Вправо') : ''}
+                        ${ctrl(`removePhoto(${i})`, 'trash-2', 'Видалити', 'hover:!bg-rose-600')}
+                    </div>
+                </div>`).join('') + `
+                <label for="ed-file" ondragover="event.preventDefault(); this.classList.add('!border-rose-500')" ondragleave="this.classList.remove('!border-rose-500')" ondrop="onPhotoDrop(event)"
+                    class="aspect-square rounded-2xl border-2 border-dashed border-zinc-700 hover:border-rose-500 flex flex-col items-center justify-center text-zinc-400 hover:text-rose-400 cursor-pointer transition text-center p-2">
+                    <i data-lucide="image-plus" class="w-6 h-6 mb-1"></i>
+                    <span class="text-[11px] font-bold">Додати фото</span>
+                    <span class="text-[10px] text-zinc-500 hidden sm:block">або перетягніть сюди</span>
+                </label>`;
+            refreshIcons();
+        }
+
+        function onPhotoDrop(e) {
+            e.preventDefault();
+            e.currentTarget.classList.remove('!border-rose-500');
+            handleEditorFiles(e.dataTransfer.files);
+        }
+
+        async function handleEditorFiles(files) {
+            const list = [...(files || [])].filter(f => f.type.startsWith('image/'));
+            if (!list.length || !editorDraft) return;
+            const status = $('ed-photo-status');
+            for (let i = 0; i < list.length; i++) {
+                status.textContent = `Обробка фото ${i + 1} з ${list.length}...`;
+                try {
+                    const key = await storeImageFile(list[i]);
+                    if (!editorDraft) return;
+                    editorDraft.images.push(key);
+                    renderEditorPhotos();
+                    onEditorInput();
+                } catch (e) {
+                    showToast(`Не вдалося обробити «${list[i].name}»`);
+                }
+            }
+            status.textContent = '';
+        }
+
+        function addEditorPhotoUrl() {
+            const v = $('ed-photo-url').value.trim();
+            if (!/^https?:\/\//i.test(v)) { showToast('Вставте посилання, що починається з http'); return; }
+            editorDraft.images.push(v);
+            $('ed-photo-url').value = '';
+            renderEditorPhotos();
+            onEditorInput();
+        }
+
+        function setMainPhoto(i) {
+            const [img] = editorDraft.images.splice(i, 1);
+            editorDraft.images.unshift(img);
+            renderEditorPhotos(); onEditorInput();
+        }
+        function movePhoto(i, d) {
+            const a = editorDraft.images, j = i + d;
+            if (j < 0 || j >= a.length) return;
+            [a[i], a[j]] = [a[j], a[i]];
+            renderEditorPhotos(); onEditorInput();
+        }
+        function removePhoto(i) {
+            editorDraft.images.splice(i, 1);
+            renderEditorPhotos(); onEditorInput();
+        }
+
+        function renderEditorVariants() {
+            $('ed-variants').innerHTML = editorDraft.variants.map((v, i) => `
+                <div class="flex gap-2 items-center">
+                    <input type="text" value="${esc(v.name)}" placeholder="Назва, напр. 25 шт" oninput="editorDraft.variants[${i}].name=this.value" class="fld">
+                    <input type="number" min="1" value="${esc(v.price)}" placeholder="Ціна" oninput="editorDraft.variants[${i}].price=this.value" class="fld" style="width:8.5rem">
+                    <button type="button" onclick="removeVariant(${i})" title="Видалити варіант" class="icon-btn shrink-0 bg-zinc-800 hover:bg-rose-500/20 text-zinc-400 hover:text-rose-400"><i data-lucide="x" class="w-4 h-4"></i></button>
+                </div>`).join('') || `<p class="text-xs text-zinc-500">Варіантів немає — товар продається за однією ціною.</p>`;
+            refreshIcons();
+        }
+        function addVariant() {
+            syncDraftFromFields();
+            editorDraft.variants.push({ name: '', price: editorDraft.variants.length ? '' : (Number(editorDraft.price) || '') });
+            renderEditorVariants();
+            onEditorInput();
+            const inputs = $('ed-variants').querySelectorAll('input[type=text]');
+            inputs[inputs.length - 1]?.focus();
+        }
+        function removeVariant(i) {
+            editorDraft.variants.splice(i, 1);
+            renderEditorVariants();
+            onEditorInput();
+        }
+
+        function editorError(msg) {
+            $('ed-error').textContent = msg;
+            showToast(msg);
+            return false;
+        }
+
+        async function saveEditor() {
+            syncDraftFromFields();
+            const d = editorDraft;
+            d.variants = d.variants.filter(v => String(v.name).trim() || String(v.price).trim());
+            if (!d.title.trim()) return editorError('Вкажіть назву товару');
+            if (!d.images.length) return editorError('Додайте хоча б одне фото');
+            if (d.variants.some(v => !String(v.name).trim() || !(Number(v.price) > 0))) {
+                renderEditorVariants();
+                return editorError('У кожного варіанту має бути назва і ціна');
+            }
+            if (!d.variants.length && !(Number(d.price) > 0)) return editorError('Вкажіть ціну');
+            if (d.stockMode === 'limited' && (d.stock === '' || Number(d.stock) < 0)) return editorError('Вкажіть кількість на складі');
+            if (!d.flowers.length && FLOWER_FORMATS.includes(d.category)) d.flowers = detectFlowers(d.title + ' ' + d.desc);
+
+            const product = draftToProduct(d);
+            const wasNew = !d.id;
+            if (d.id) {
+                const idx = products.findIndex(p => p.id === d.id);
+                if (idx !== -1) products[idx] = { ...product, id: d.id };
+            } else {
+                product.id = Date.now();
+                products.unshift(product);
+                shuffleOrder.set(product.id, Math.random());
+            }
+            if (!saveProducts()) return;
+            markDirty();
+            editorDraft = null;
+            await closeEditor(false);
+            showToast(wasNew ? 'Товар додано' : 'Зміни збережено');
+            refreshAll();
+        }
+
+        // ================== АДМІНКА: ЗАМОВЛЕННЯ ==================
+        function updateOrdersBadge() {
+            const n = orders.filter(o => (o.status || 'new') === 'new').length;
+            const b = $('new-orders-badge');
+            b.innerText = n;
+            b.classList.toggle('hidden', n === 0);
+            b.classList.toggle('inline-flex', n > 0);
+        }
+
+        function renderOrders() {
+            updateOrdersBadge();
+            const container = $('admin-orders-list');
+            const ordersNote = `<div class="flex items-start gap-3 p-4 rounded-2xl bg-zinc-800/60 border border-zinc-700 text-zinc-300 text-sm"><i data-lucide="send" class="w-5 h-5 shrink-0 text-sky-300"></i><span>${ordersSource === 'server' ? 'Тут усі замовлення з сайту. Нові також приходять вам у Telegram.' : 'Сайт відкритий як файл, тому тут лише тестові замовлення з цього браузера. На опублікованому сайті тут будуть усі замовлення покупців.'}</span></div>`;
+            if (orders.length === 0) {
+                container.innerHTML = ordersNote + `
+                    <div class="bg-zinc-900/80 border border-zinc-800 rounded-3xl p-12 text-center text-zinc-400">
+                        <i data-lucide="inbox" class="w-10 h-10 mx-auto mb-3 text-zinc-600"></i>
+                        <p class="font-semibold text-white mb-1">Замовлень поки немає</p>
+                        <p class="text-xs">Тут з'являтимуться замовлення, оформлені в цьому браузері.</p>
+                    </div>`;
+                refreshIcons();
+                return;
+            }
+            container.innerHTML = ordersNote + orders.map(o => {
+                const status = o.status || 'new';
+                const st = ORDER_STATUSES[status] || ORDER_STATUSES.new;
+                const d = o.delivery || { address: o.customer?.address };
+                const items = (o.items || []).map(i => `
+                    <li class="flex justify-between gap-3"><span>${esc(i.title)} <span class="text-zinc-500">× ${i.qty || 1}</span></span><span class="whitespace-nowrap">${formatPrice(i.price * (i.qty || 1))}</span></li>`).join('');
+                const options = Object.entries(ORDER_STATUSES).map(([k, s]) => `<option value="${k}" ${k === status ? 'selected' : ''}>${s.label}</option>`).join('');
+                return `
+                <div class="bg-zinc-900/80 border border-zinc-800 rounded-3xl p-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-4 border-b border-zinc-800">
+                        <div>
+                            <span class="text-lg font-extrabold text-white">№${esc(o.number || String(o.id).slice(-6))}</span>
+                            <span class="text-xs text-zinc-500 ml-2">${esc(o.date)}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            
+                            <span class="text-[10px] font-bold px-2.5 py-1 rounded-full border ${st.cls}">${st.label}</span>
+                            <select onchange="setOrderStatus('${esc(o.id)}', this.value)" class="px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-xl text-xs text-white focus:outline-none">${options}</select>
+                            <button onclick="deleteOrder('${esc(o.id)}')" class="p-2 text-zinc-500 hover:text-rose-400" aria-label="Видалити"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                        </div>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6 text-sm">
+                        <div class="space-y-1.5 text-zinc-300">
+                            <p><span class="text-zinc-500">Замовник:</span> ${esc(o.customer?.name)}, <a href="tel:${esc(o.customer?.phone)}" class="text-rose-400 hover:underline">${esc(o.customer?.phone)}</a></p>
+                            <p><span class="text-zinc-500">Адреса:</span> ${esc(d.address)}</p>
+                            ${d.date || d.time ? `<p><span class="text-zinc-500">Коли:</span> ${esc(d.date || '')} ${esc(d.time || '')}</p>` : ''}
+                            ${d.recipient ? `<p><span class="text-zinc-500">Отримувач:</span> ${esc(d.recipient)}</p>` : ''}
+                            ${d.anonymous ? `<p class="text-amber-300">Анонімна доставка</p>` : ''}
+                            ${o.cardText ? `<p><span class="text-zinc-500">Листівка:</span> «${esc(o.cardText)}»</p>` : ''}
+                            ${o.comment ? `<p><span class="text-zinc-500">Коментар:</span> ${esc(o.comment)}</p>` : ''}
+                        </div>
+                        <div>
+                            <ul class="space-y-1.5 text-zinc-300 mb-3">${items}</ul>
+                            ${o.discount ? `<div class="flex justify-between text-emerald-400 text-xs font-semibold"><span>Акція 1+1=3</span><span>−${formatPrice(o.discount)}</span></div>` : ''}
+                            <div class="flex justify-between text-white font-extrabold mt-2 pt-2 border-t border-zinc-800"><span>Разом</span><span class="text-rose-400">${formatPrice(o.total || 0)}</span></div>
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+            refreshIcons();
+        }
+
+        async function setOrderStatus(id, status) {
+            const o = orders.find(x => String(x.id) === String(id));
+            if (!o) return;
+            if (ordersSource === 'server') {
+                const res = await api('/api/orders', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, status }) }).catch(() => null);
+                if (!res || !res.ok) { showToast('Не вдалося змінити статус. Перевірте інтернет'); renderOrders(); return; }
+            }
+            o.status = status;
+            if (ordersSource === 'local') saveOrders();
+            renderOrders();
+        }
+
+        async function deleteOrder(id) {
+            if (!confirm('Видалити це замовлення?')) return;
+            if (ordersSource === 'server') {
+                const res = await api('/api/orders?id=' + encodeURIComponent(id), { method: 'DELETE' }).catch(() => null);
+                if (!res || !res.ok) { showToast('Не вдалося видалити. Перевірте інтернет'); return; }
+            }
+            orders = orders.filter(o => String(o.id) !== String(id));
+            if (ordersSource === 'local') saveOrders();
+            renderOrders();
+        }
+
+        // ================== АДМІНКА: НАЛАШТУВАННЯ ==================
+        function renderSettings() {
+            $('set-hero-preview').src = resolveImg(settings.heroImage);
+            $('set-hero-title').value = settings.heroTitle;
+            $('set-hero-sub').value = settings.heroSubtitle;
+            $('set-ticker').value = settings.ticker;
+            $('set-phone').value = settings.contactPhone || '';
+            $('set-insta').value = settings.contactInstagram || '';
+            $('set-hours').value = settings.contactHours || '';
+            $('set-promo-enabled').checked = !!settings.promoEnabled;
+            $('set-promo-title').value = settings.promoTitle;
+            $('set-promo-text').value = settings.promoText;
+            $('set-hero-url').value = '';
+            $('publish-status').innerHTML = publishStatusHtml();
+        }
+
+        function updateSetting(key, value) {
+            settings[key] = value;
+            saveSettings();
+            markDirty();
+            applySettings();
+            if (key === 'promoEnabled') { renderProducts(); updateCartUI(); }
+        }
+
+        async function uploadHero(files) {
+            const f = files && files[0];
+            if (!f) return;
+            try {
+                const key = await storeImageFile(f, 2000);
+                updateSetting('heroImage', key);
+                await gcImages();
+                renderSettings();
+                showToast('Фото головного екрана оновлено');
+            } catch (e) { showToast('Не вдалося завантажити фото'); }
+        }
+
+        async function setHeroUrl() {
+            const v = $('set-hero-url').value.trim();
+            if (!/^https?:\/\//i.test(v)) { showToast('Вставте посилання, що починається з http'); return; }
+            updateSetting('heroImage', v);
+            await gcImages();
+            renderSettings();
+            showToast('Фото головного екрана оновлено');
+        }
+
+        async function exportCatalog() {
+            try {
+                const conv = async s => {
+                    if (s && s.startsWith('idb:') && IDB.db) {
+                        const blob = await IDB.get(s);
+                        return blob ? await blobToDataURL(blob) : '';
+                    }
+                    return s;
+                };
+                const data = {
+                    app: 'kvtka', version: 2, exportedAt: new Date().toISOString(),
+                    settings: { ...settings, heroImage: await conv(settings.heroImage) },
+                    products: []
+                };
+                for (const p of products) data.products.push({ ...p, images: await Promise.all(p.images.map(conv)) });
+                const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = `kvtka-catalog-${todayISO()}.json`;
+                a.click();
+                setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+                showToast('Копію каталогу збережено');
+            } catch (e) { showToast('Не вдалося зберегти копію'); }
+        }
+
+        async function importCatalog(files) {
+            const f = files && files[0];
+            if (!f) return;
+            try {
+                const data = JSON.parse(await f.text());
+                if (!Array.isArray(data.products)) throw new Error('format');
+                if (!confirm(`Замінити поточний каталог на ${data.products.length} товарів з файлу?`)) return;
+                const conv = async s => (s && s.startsWith('data:')) ? await storeImageBlob(await (await fetch(s)).blob()) : s;
+                const imported = [];
+                for (const p of data.products) {
+                    const np = normalizeProduct({ ...p, images: await Promise.all((p.images || [p.image]).filter(Boolean).map(conv)) });
+                    if (!np.id) np.id = Date.now() + imported.length;
+                    imported.push(np);
+                }
+                products = imported;
+                if (data.settings) settings = { ...DEFAULT_SETTINGS, ...data.settings, heroImage: await conv(data.settings.heroImage || DEFAULT_SETTINGS.heroImage) };
+                saveProducts();
+                saveSettings();
+                markDirty();
+                await gcImages();
+                buildShuffle();
+                applySettings();
+                showToast('Каталог завантажено з файлу');
+                refreshAll();
+            } catch (e) { showToast('Файл не підходить або пошкоджений'); }
+        }
+
+        async function resetCatalog() {
+            if (!confirm('Повернути початковий каталог і налаштування? Ваші товари та фото буде видалено (замовлення залишаться).')) return;
+            products = [...initialProducts, ...EXTRA_PRODUCTS].map(normalizeProduct);
+            settings = { ...DEFAULT_SETTINGS };
+            saveProducts();
+            saveSettings();
+            markDirty();
+            await gcImages();
+            buildShuffle();
+            applySettings();
+            showToast('Каталог скинуто до початкового');
+            refreshAll();
+        }
+
+        // ================== ПУБЛІКАЦІЯ КАТАЛОГУ ==================
+        // На опублікованому сайті товари, фото і замовлення зберігаються на сервері Netlify.
+        // Зміни в адмінці спочатку зберігаються на цьому пристрої; кнопка «Опублікувати» одразу оновлює сайт для всіх.
+        const KEY_DIRTY = 'kv_unpublished';
+        const KEY_BASE = 'kv_base_published_at';
+        const KEY_STOCK_BASE = 'kv_stock_base';
+        const isHosted = () => location.protocol.startsWith('http');
+        let publishedState = 'none'; // none | live | local-drafts
+        let adminKey = '';
+        try { adminKey = sessionStorage.getItem('kv_admin_key') || ''; } catch (e) {}
+
+        function markDirty() { store(KEY_DIRTY, true); }
+        const hasDrafts = () => !!load(KEY_DIRTY, false);
+        const stockMap = () => Object.fromEntries(products.filter(p => p.stock !== null).map(p => [p.id, p.stock]));
+
+        function api(path, opts = {}) {
+            const headers = { ...(opts.headers || {}) };
+            if (adminKey) headers['x-admin-key'] = adminKey;
+            return fetch(path, { ...opts, headers, cache: 'no-store' });
+        }
+
+        async function loadPublishedCatalog() {
+            if (!isHosted()) return;
+            try {
+                const res = await fetch('/api/catalog', { cache: 'no-store' });
+                if (!res.ok) return;
+                const data = await res.json();
+                if (!Array.isArray(data.products)) return;
+                if (hasDrafts()) { publishedState = 'local-drafts'; return; }
+                products = data.products.map(normalizeProduct);
+                if (data.settings) settings = { ...DEFAULT_SETTINGS, ...data.settings };
+                store(KEY_BASE, data.publishedAt || '');
+                store(KEY_STOCK_BASE, stockMap());
+                publishedState = 'live';
+            } catch (e) {}
+        }
+
+        async function uploadImage(src) {
+            let blob;
+            if (src.startsWith('idb:')) blob = IDB.db ? await IDB.get(src) : null;
+            else if (src.startsWith('data:')) blob = await (await fetch(src)).blob();
+            if (!blob) throw new Error('Фото не знайдено на цьому пристрої');
+            const res = await api('/api/image', { method: 'POST', headers: { 'Content-Type': blob.type || 'image/jpeg' }, body: blob });
+            if (res.status === 401) throw new Error('auth');
+            if (!res.ok) throw new Error('Не вдалося завантажити фото на сервер');
+            return (await res.json()).url;
+        }
+
+        let publishing = false;
+        async function publishCatalog(force = false) {
+            if (!isHosted()) {
+                showToast('Публікація працює на сайті в інтернеті (адреса …netlify.app). Зараз сайт відкритий як файл.');
+                return;
+            }
+            if (!adminKey) { showToast('Увійдіть в адмінку ще раз, щоб опублікувати'); return; }
+            if (publishing) return;
+            publishing = true;
+            try {
+                // 1) Завантажуємо нові фото на сервер
+                const local = new Set();
+                products.forEach(p => p.images.forEach(s => { if (/^(idb:|data:)/.test(s)) local.add(s); }));
+                if (/^(idb:|data:)/.test(settings.heroImage || '')) local.add(settings.heroImage);
+                const map = new Map();
+                let i = 0;
+                for (const src of local) {
+                    i++;
+                    showToast(`Завантажуємо фото ${i} з ${local.size}…`);
+                    map.set(src, await uploadImage(src));
+                }
+                const swap = s => map.get(s) || s;
+                products = products.map(p => ({ ...p, images: p.images.map(swap) }));
+                settings = { ...settings, heroImage: swap(settings.heroImage) };
+                saveProducts();
+                saveSettings();
+
+                // 2) Публікуємо каталог
+                showToast('Публікуємо каталог…');
+                const res = await api('/api/catalog', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ catalog: { app: 'kvtka', version: 4, settings, products }, baseAt: load(KEY_BASE, ''), stockBase: load(KEY_STOCK_BASE, {}), force })
+                });
+                if (res.status === 409) {
+                    publishing = false;
+                    if (confirm('Каталог на сайті вже змінили з іншого пристрою. Опублікувати ваші зміни поверх них?\n\n«Скасувати» — залишити версію з сайту (ваші зміни на цьому пристрої буде відкинуто).')) return publishCatalog(true);
+                    return discardDrafts(true);
+                }
+                if (res.status === 401) throw new Error('auth');
+                if (!res.ok) throw new Error('Сервер не прийняв каталог');
+                const out = await res.json();
+                if (out.stock) products.forEach(p => { if (Object.prototype.hasOwnProperty.call(out.stock, p.id)) p.stock = out.stock[p.id]; });
+                saveProducts();
+                store(KEY_DIRTY, false);
+                store(KEY_BASE, out.publishedAt);
+                store(KEY_STOCK_BASE, stockMap());
+                publishedState = 'live';
+                await gcImages();
+                showToast('Готово! Сайт оновлено для всіх покупців');
+                refreshAll();
+            } catch (e) {
+                if (e.message === 'auth') {
+                    adminKey = '';
+                    try { sessionStorage.removeItem('kv_admin_key'); } catch (err) {}
+                    showToast('Пароль не підійшов. Увійдіть в адмінку ще раз');
+                } else {
+                    showToast(e.message || 'Не вдалося опублікувати. Перевірте інтернет');
+                }
+            } finally {
+                publishing = false;
+            }
+        }
+
+        async function discardDrafts(skipConfirm = false) {
+            if (!skipConfirm && !confirm('Відкинути зміни на цьому пристрої і завантажити каталог з сайту?')) return;
+            store(KEY_DIRTY, false);
+            await loadPublishedCatalog();
+            buildShuffle();
+            applySettings();
+            await gcImages();
+            showToast('Завантажено актуальний каталог з сайту');
+            refreshAll();
+        }
+
+        function publishStatusHtml() {
+            if (!isHosted()) return '';
+            if (hasDrafts()) return `
+                <div class="flex flex-col sm:flex-row sm:items-center gap-3 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-100 text-sm">
+                    <i data-lucide="cloud-upload" class="w-5 h-5 shrink-0 text-amber-300"></i>
+                    <span class="flex-1">Ваші зміни збережені тільки на цьому пристрої — покупці їх ще не бачать.</span>
+                    <div class="flex gap-2 shrink-0">
+                        <button onclick="discardDrafts()" class="px-3 py-2 rounded-xl border border-amber-400/40 text-amber-200 font-bold text-xs">Відкинути</button>
+                        <button onclick="publishCatalog()" class="px-4 py-2 rounded-xl bg-amber-400 text-zinc-900 font-bold text-xs">Опублікувати</button>
+                    </div>
+                </div>`;
+            return '';
+        }
+
+        // ---- Замовлення з сервера ----
+        let ordersSource = 'local';
+        async function loadServerOrders() {
+            if (!isHosted() || !adminKey) return false;
+            try {
+                const res = await api('/api/orders');
+                if (!res.ok) return false;
+                const data = await res.json();
+                orders = data.orders || [];
+                ordersSource = 'server';
+                return true;
+            } catch (e) { return false; }
+        }
+
+        // ================== СТАРТ ==================
+        document.addEventListener('keydown', e => {
+            if (e.key !== 'Escape') return;
+            if (!$('editor-modal').classList.contains('hidden')) { closeEditor(true); return; }
+            closeDD(); closeMobileMenu(); closeProductModal(); closeAdminModal(); toggleCart(false);
+        });
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            $('order-date').min = todayISO();
+            $('order-date').value = todayISO();
+
+            try {
+                await IDB.open();
+                (await IDB.all()).forEach(([k, blob]) => imageCache.set(k, URL.createObjectURL(blob)));
+            } catch (e) { IDB.db = null; }
+
+            await loadPublishedCatalog();
+            if (publishedState !== 'live') { saveProducts(); saveSettings(); }
+            fillSelects();
+            applySettings();
+            buildShuffle();
+            buildNav();
+            renderProducts();
+            updateCartUI();
+            updateOrdersBadge();
+            updateTimeSlots();
+            refreshIcons();
+            if (location.hash === '#admin') openAdminModal();
+        });
+        window.addEventListener('hashchange', () => { if (location.hash === '#admin') openAdminModal(); });
+    </script>
+</body>
+</html>
